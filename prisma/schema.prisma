@@ -1,0 +1,202 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+ 
+generator client {
+  provider = "prisma-client-js"
+}
+
+model WebSiteSettings {
+  id               Int   @id @default(autoincrement())
+  title            String
+  subtitle         String
+  description      String  @db.Text
+  imageDesktop     String? @db.Text
+  imageMobile      String? @db.Text
+  video            String?
+  logo             String
+  logoWhite        String
+  favicon          String
+  emailContact     String
+  youtube          String?
+  facebook         String?
+  instagram        String?
+  linkedin         String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id                     String          @id @default(cuid())
+  name                   String?         // First name
+  username               String?         // Last name
+  email                  String          @unique
+  emailVerified          DateTime?
+  image                  String?
+  isAdmin                Boolean         @default(false)
+  password               String?
+  Session       Session[]
+  Account       Account?
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   String  @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User?   @relation(fields: [userId], references: [id])
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+ 
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id])
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  @@index([userId])
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+}
+ 
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([userId, credentialID])
+}
+
+model Quests {
+  id            String     @id @default(cuid())
+  title         String
+  description   String
+  scoreReward   Int
+  isCompleted   Boolean
+}
+
+model Betterteams_team {
+  teamID            String     @id @default(cuid())
+  name          String
+  description   String?
+  open          Boolean   @default(false)
+  score         Int       @default(0)
+  money         Float     @default(0)
+  home          String?
+  echest        String?
+  level         Int       @default(1)
+  tag           String?
+  color         String?
+  pvp           Boolean   @default(false)
+
+  players       players[]
+  Betterteams_players Betterteams_players[] @relation("betterteams_players_ibfk_1")
+  Betterteams_chestclaims Betterteams_chestclaims[] @relation("betterteams_chestclaims_ibfk_1")
+  Betterteams_bans Betterteams_bans[] @relation("betterteams_bans_ibfk_1")
+  Betterteams_allies_team1 Betterteams_allies[] @relation("betterteams_allies_ibfk_1")
+  Betterteams_allies_team2 Betterteams_allies[] @relation("betterteams_allies_ibfk_2")
+  Betterteams_allyrequests_requestingTeam Betterteams_allyrequests[] @relation("betterteams_allyrequests_ibfk_1")
+  Betterteams_allyrequests_receivingTeam Betterteams_allyrequests[] @relation("betterteams_allyrequests_ibfk_2")
+  betterteams_warps betterteams_warps[] @relation("betterteams_warps_ibfk_1")
+}
+
+model Betterteams_allyrequests {
+  requestingTeamID  String
+  receivingTeamID   String @unique
+
+  @@id([requestingTeamID, receivingTeamID])
+
+  requestingTeam   Betterteams_team @relation(fields: [requestingTeamID], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_allyrequests_ibfk_1")
+  receivingTeam    Betterteams_team @relation(fields: [receivingTeamID], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_allyrequests_ibfk_2")
+}
+
+model Betterteams_allies {
+  teamID1  String
+  teamID2  String @unique
+
+  @@id([teamID1, teamID2])
+
+  team1   Betterteams_team @relation(fields: [teamID1], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_allies_ibfk_1")
+  team2   Betterteams_team @relation(fields: [teamID2], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_allies_ibfk_2")
+}
+
+model Betterteams_bans {
+  PlayerUUID    String
+  TeamID        String @unique
+
+  @@id([PlayerUUID, TeamID])
+  team   Betterteams_team @relation(fields: [TeamID], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_bans_ibfk_1")
+}
+
+model Betterteams_chestclaims {
+  TeamID        String 
+  chestLoc      String 
+
+  @@id([TeamID, chestLoc])
+  team   Betterteams_team @relation(fields: [TeamID], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_chestclaims_ibfk_1")
+}
+
+model Betterteams_players {
+  playerUUID    String    @id
+  teamID        String    @unique
+  playerRank    Int       @default(0)
+  title         String?
+
+  team          Betterteams_team @relation(fields: [teamID], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_players_ibfk_1")
+}
+
+model betterteams_warps {
+  TeamID        String
+  warpInfo      String
+
+  @@id([TeamID, warpInfo])
+
+  team   Betterteams_team @relation(fields: [TeamID], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_warps_ibfk_1")
+}
+
+model players {
+  id                  String     @id @default(cuid())
+  nickname            String
+  minecraftNickname   String
+  teamId              String
+  isOwner             Boolean   @default(false)
+  team                Betterteams_team @relation(fields: [teamId], references: [teamID])
+}

@@ -1,0 +1,21 @@
+{
+    // "parser": "@typescript-eslint/parser",
+    "extends": ["next"],
+    // "parserOptions": {
+    //     "ecmaVersion": "latest",
+    //     "sourceType": "module",
+    //     "project": "./tsconfig.json"
+    // },
+    "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/interface-name-prefix": 0,
+        "@typescript-eslint/explicit-member-accessibility": 0,
+        "@typescript-eslint/camelcase": 0,
+        "@typescript-eslint/no-explicit-any": "off",
+        "react/no-unescaped-entities": "off",
+        "@next/next/no-page-custom-font": "off"
+        // "prettier/prettier": ["", { "endOfLine": "auto" }]
+        // "@typescript-eslint/no-floating-promises": ["error"],
+        // "@typescript-eslint/promise-function-async": ["error"]
+    }
+}
