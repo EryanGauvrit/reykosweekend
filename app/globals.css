@@ -81,12 +81,12 @@
     body {
         @apply bg-background text-foreground;
     }
-    input[type='date']::-webkit-calendar-picker-indicator {
+    /* input[type='date']::-webkit-calendar-picker-indicator {
         @apply invert;
     }
     input[type='file']::-webkit-file-upload-button {
         @apply invert;
-    }
+    } */
 }
 
 @keyframes scale-up-down {

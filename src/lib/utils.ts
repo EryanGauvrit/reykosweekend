@@ -84,5 +84,5 @@ export const formatStartEndDate = (startDate: Date, endDate: Date, formatStr?: s
     if (format(startDate, 'dd/MMMM/yyyy') === format(endDate, 'dd/MMMM/yyyy')) {
         return `Le ${formatDate(startDate, formatStr || 'dd MMMM yyyy')}`;
     }
-    return `Du ${formatDate(startDate, formatStr || 'dd')} au ${formatDate(endDate, formatStr || 'dd MMMM yyyy')}`;
+    return `Du ${formatDate(startDate, formatStr || 'dd MMMM à kk:mm')} au ${formatDate(endDate, formatStr || 'dd MMMM yyyy à kk:mm')}`;
 };

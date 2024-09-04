@@ -101,17 +101,6 @@ CREATE TABLE `Authenticator` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Quests` (
-    `id` VARCHAR(191) NOT NULL,
-    `title` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NOT NULL,
-    `scoreReward` INTEGER NOT NULL,
-    `isCompleted` BOOLEAN NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `Betterteams_team` (
     `teamID` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
@@ -125,6 +114,7 @@ CREATE TABLE `Betterteams_team` (
     `tag` VARCHAR(191) NULL,
     `color` VARCHAR(191) NULL,
     `pvp` BOOLEAN NOT NULL DEFAULT false,
+    `eventId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`teamID`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -176,7 +166,7 @@ CREATE TABLE `Betterteams_players` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `betterteams_warps` (
+CREATE TABLE `Betterteams_warps` (
     `TeamID` VARCHAR(191) NOT NULL,
     `warpInfo` VARCHAR(191) NOT NULL,
 
@@ -184,14 +174,85 @@ CREATE TABLE `betterteams_warps` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `players` (
+CREATE TABLE `TeamRegister` (
+    `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `registerContext` TEXT NOT NULL,
+    `eventId` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Players` (
     `id` VARCHAR(191) NOT NULL,
     `nickname` VARCHAR(191) NOT NULL,
     `minecraftNickname` VARCHAR(191) NOT NULL,
-    `teamId` VARCHAR(191) NOT NULL,
+    `teamId` VARCHAR(191) NULL,
+    `teamRegisterId` VARCHAR(191) NULL,
     `isOwner` BOOLEAN NOT NULL DEFAULT false,
+    `eventId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Quests` (
+    `id` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NOT NULL,
+    `scoreReward` INTEGER NOT NULL,
+    `eventId` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Event` (
+    `id` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NOT NULL,
+    `startDate` DATETIME(3) NOT NULL,
+    `dueDate` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `EventInGame` (
+    `id` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NOT NULL,
+    `startDate` DATETIME(3) NOT NULL,
+    `dueDate` DATETIME(3) NOT NULL,
+    `scoreRewardFirst` INTEGER NOT NULL,
+    `scoreRewardSecond` INTEGER NOT NULL,
+    `scoreRewardThird` INTEGER NOT NULL,
+    `rewardFirst` VARCHAR(191) NOT NULL,
+    `rewardSecond` VARCHAR(191) NOT NULL,
+    `rewardThird` VARCHAR(191) NOT NULL,
+    `eventId` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `EventGameRanking` (
+    `id` VARCHAR(191) NOT NULL,
+    `teamId` VARCHAR(191) NOT NULL,
+    `rankPosition` INTEGER NOT NULL,
+    `eventInGameId` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `_Betterteams_teamToQuests` (
+    `A` VARCHAR(191) NOT NULL,
+    `B` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `_Betterteams_teamToQuests_AB_unique`(`A`, `B`),
+    INDEX `_Betterteams_teamToQuests_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
@@ -202,6 +263,9 @@ ALTER TABLE `Session` ADD CONSTRAINT `Session_userId_fkey` FOREIGN KEY (`userId`
 
 -- AddForeignKey
 ALTER TABLE `Authenticator` ADD CONSTRAINT `Authenticator_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Betterteams_team` ADD CONSTRAINT `Betterteams_team_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Betterteams_allyrequests` ADD CONSTRAINT `Betterteams_allyrequests_requestingTeamID_fkey` FOREIGN KEY (`requestingTeamID`) REFERENCES `Betterteams_team`(`teamID`) ON DELETE CASCADE ON UPDATE RESTRICT;
@@ -225,7 +289,34 @@ ALTER TABLE `Betterteams_chestclaims` ADD CONSTRAINT `Betterteams_chestclaims_Te
 ALTER TABLE `Betterteams_players` ADD CONSTRAINT `Betterteams_players_teamID_fkey` FOREIGN KEY (`teamID`) REFERENCES `Betterteams_team`(`teamID`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 -- AddForeignKey
-ALTER TABLE `betterteams_warps` ADD CONSTRAINT `betterteams_warps_TeamID_fkey` FOREIGN KEY (`TeamID`) REFERENCES `Betterteams_team`(`teamID`) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE `Betterteams_warps` ADD CONSTRAINT `Betterteams_warps_TeamID_fkey` FOREIGN KEY (`TeamID`) REFERENCES `Betterteams_team`(`teamID`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 -- AddForeignKey
-ALTER TABLE `players` ADD CONSTRAINT `players_teamId_fkey` FOREIGN KEY (`teamId`) REFERENCES `Betterteams_team`(`teamID`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `TeamRegister` ADD CONSTRAINT `TeamRegister_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Players` ADD CONSTRAINT `Players_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Players` ADD CONSTRAINT `Players_teamId_fkey` FOREIGN KEY (`teamId`) REFERENCES `Betterteams_team`(`teamID`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+-- AddForeignKey
+ALTER TABLE `Players` ADD CONSTRAINT `Players_teamRegisterId_fkey` FOREIGN KEY (`teamRegisterId`) REFERENCES `TeamRegister`(`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+-- AddForeignKey
+ALTER TABLE `Quests` ADD CONSTRAINT `Quests_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `EventInGame` ADD CONSTRAINT `EventInGame_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `EventGameRanking` ADD CONSTRAINT `EventGameRanking_eventInGameId_fkey` FOREIGN KEY (`eventInGameId`) REFERENCES `EventInGame`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `EventGameRanking` ADD CONSTRAINT `EventGameRanking_teamId_fkey` FOREIGN KEY (`teamId`) REFERENCES `Betterteams_team`(`teamID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- AddForeignKey
+ALTER TABLE `_Betterteams_teamToQuests` ADD CONSTRAINT `_Betterteams_teamToQuests_A_fkey` FOREIGN KEY (`A`) REFERENCES `Betterteams_team`(`teamID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_Betterteams_teamToQuests` ADD CONSTRAINT `_Betterteams_teamToQuests_B_fkey` FOREIGN KEY (`B`) REFERENCES `Quests`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

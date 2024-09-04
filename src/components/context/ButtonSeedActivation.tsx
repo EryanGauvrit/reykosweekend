@@ -8,8 +8,9 @@ const ButtonSeedActivation = () => {
     const router = useRouter();
     return (
         <Button
-            onClick={() => {
-                dbInitializer()
+            className="m-auto"
+            onClick={async () => {
+                await dbInitializer()
                     .then(() => {
                         console.log('Database initialized');
                         router.refresh();

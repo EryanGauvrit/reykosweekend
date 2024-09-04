@@ -12,7 +12,7 @@ export const Header = (props: { children: React.ReactNode }) => {
     const routes = [
         { href: '/', text: 'Accueil' }, // Ranking, program, presentation
         { href: '/rules', text: 'Règles' },
-        { href: '/quests', text: 'Objetifs' },
+        { href: '/quests', text: 'Quêtes' },
         { href: '/registration', text: 'Inscription' },
         { href: '/contact', text: 'Nous Contacter' },
     ];

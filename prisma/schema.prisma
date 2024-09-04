@@ -105,16 +105,8 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
-model Quests {
-  id            String     @id @default(cuid())
-  title         String
-  description   String
-  scoreReward   Int
-  isCompleted   Boolean
-}
-
 model Betterteams_team {
-  teamID            String     @id @default(cuid())
+  teamID        String     @id @default(cuid())
   name          String
   description   String?
   open          Boolean   @default(false)
@@ -126,16 +118,20 @@ model Betterteams_team {
   tag           String?
   color         String?
   pvp           Boolean   @default(false)
+  eventId       String
 
-  players       players[]
-  Betterteams_players Betterteams_players[] @relation("betterteams_players_ibfk_1")
-  Betterteams_chestclaims Betterteams_chestclaims[] @relation("betterteams_chestclaims_ibfk_1")
-  Betterteams_bans Betterteams_bans[] @relation("betterteams_bans_ibfk_1")
-  Betterteams_allies_team1 Betterteams_allies[] @relation("betterteams_allies_ibfk_1")
-  Betterteams_allies_team2 Betterteams_allies[] @relation("betterteams_allies_ibfk_2")
-  Betterteams_allyrequests_requestingTeam Betterteams_allyrequests[] @relation("betterteams_allyrequests_ibfk_1")
-  Betterteams_allyrequests_receivingTeam Betterteams_allyrequests[] @relation("betterteams_allyrequests_ibfk_2")
-  betterteams_warps betterteams_warps[] @relation("betterteams_warps_ibfk_1")
+  ranking                                     EventGameRanking[]
+  players                                     Players[]
+  quests                                      Quests[]
+  event                                       Event @relation(fields: [eventId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  Betterteams_players                         Betterteams_players[] @relation("betterteams_players_ibfk_1")
+  Betterteams_chestclaims                     Betterteams_chestclaims[] @relation("betterteams_chestclaims_ibfk_1")
+  Betterteams_bans                            Betterteams_bans[] @relation("betterteams_bans_ibfk_1")
+  Betterteams_allies_team1                    Betterteams_allies[] @relation("betterteams_allies_ibfk_1")
+  Betterteams_allies_team2                    Betterteams_allies[] @relation("betterteams_allies_ibfk_2")
+  Betterteams_allyrequests_requestingTeam     Betterteams_allyrequests[] @relation("betterteams_allyrequests_ibfk_1")
+  Betterteams_allyrequests_receivingTeam      Betterteams_allyrequests[] @relation("betterteams_allyrequests_ibfk_2")
+  betterteams_warps                           Betterteams_warps[] @relation("betterteams_warps_ibfk_1")
 }
 
 model Betterteams_allyrequests {
@@ -183,7 +179,7 @@ model Betterteams_players {
   team          Betterteams_team @relation(fields: [teamID], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_players_ibfk_1")
 }
 
-model betterteams_warps {
+model Betterteams_warps {
   TeamID        String
   warpInfo      String
 
@@ -192,11 +188,80 @@ model betterteams_warps {
   team   Betterteams_team @relation(fields: [TeamID], references: [teamID], onUpdate: Restrict, onDelete: Cascade, name: "betterteams_warps_ibfk_1")
 }
 
-model players {
-  id                  String     @id @default(cuid())
+model TeamRegister {
+  id                String     @id @default(cuid())
+  name              String
+  registerContext   String     @db.Text
+  eventId           String
+
+  players       Players[]
+  event         Event @relation(fields: [eventId], references: [id])
+}
+
+model Players {
+  id                  String            @id @default(cuid())
   nickname            String
   minecraftNickname   String
-  teamId              String
-  isOwner             Boolean   @default(false)
-  team                Betterteams_team @relation(fields: [teamId], references: [teamID])
+  email               String?
+  teamId              String?
+  teamRegisterId      String?
+  isOwner             Boolean           @default(false)
+  eventId             String
+
+  event               Event             @relation(fields: [eventId], references: [id])
+  team                Betterteams_team?  @relation(fields: [teamId], references: [teamID], onUpdate: SetNull, onDelete: SetNull)
+  teamRegister        TeamRegister?      @relation(fields: [teamRegisterId], references: [id], onUpdate: SetNull, onDelete: SetNull)
+}
+
+model Quests {
+  id            String     @id @default(cuid())
+  title         String
+  description   String
+  scoreReward   Int
+  eventId       String
+  teams         Betterteams_team[]
+
+  event         Event @relation(fields: [eventId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+}
+
+model Event {
+  id            String     @id @default(cuid())
+  title         String
+  description   String     @db.Text
+  startDate     DateTime
+  dueDate       DateTime
+
+  players         Players[]
+  Quests          Quests[]
+  teamRegisters   TeamRegister[]
+  teams           Betterteams_team[]
+  EventInGame     EventInGame[]
+}
+
+model EventInGame {
+  id                  String     @id @default(cuid())
+  title               String
+  description         String
+  startDate           DateTime
+  dueDate             DateTime
+  scoreRewardFirst    Int
+  scoreRewardSecond   Int
+  scoreRewardThird    Int
+  rewardFirst         String
+  rewardSecond        String
+  rewardThird         String
+  eventId             String
+  ranking             EventGameRanking[]
+
+  event         Event @relation(fields: [eventId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+}
+
+model EventGameRanking {
+  id            String     @id @default(cuid())
+  teamId        String
+  rankPosition  Int
+  eventInGameId String
+
+  eventInGame   EventInGame       @relation(fields: [eventInGameId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  team          Betterteams_team  @relation(fields: [teamId], references: [teamID], onUpdate: Restrict, onDelete: Restrict)
 }

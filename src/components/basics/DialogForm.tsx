@@ -81,6 +81,7 @@ const DialogForm = ({
                             .then((res) => {
                                 if (res.isErrored) {
                                     toast({ variant: res.variant, title: res.title, description: res.data });
+                                    return;
                                 } else {
                                     toast({ variant: res.variant, title: res.title, description: res.description });
                                     setIsOpen(false);

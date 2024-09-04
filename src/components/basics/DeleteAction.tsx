@@ -11,11 +11,11 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 type DeleteActionProps = {
-    id: number;
+    id: string;
     title: string;
     description: string;
     messageValidation: string;
-    fnAction: (id: number) => Promise<QueryResponse>;
+    fnAction: (id: string) => Promise<QueryResponse>;
     className?: string;
 };
 

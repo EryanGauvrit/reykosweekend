@@ -39,7 +39,7 @@ const UserPannel = ({ user }: UserPannelProps) => {
                 <DropdownMenuTrigger className="hidden md:flex items-center gap-2">
                     <Avatar>
                         <AvatarImage className="object-cover object-center" src={user.image || undefined} alt={`${user.name}`} />
-                        <AvatarFallback className="bg-primary text-foreground hover:bg-foreground hover:text-primary transition-colors">
+                        <AvatarFallback className="bg-secondary text-foreground hover:bg-foreground hover:text-primary transition-colors opacity-90">
                             <UserIcon />
                         </AvatarFallback>
                     </Avatar>
