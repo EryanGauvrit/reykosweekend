@@ -121,7 +121,7 @@ model Betterteams_team {
   eventId       String
 
   ranking                                     EventGameRanking[]
-  players                                     Players[]
+  players                                     Player[]
   quests                                      Quests[]
   event                                       Event @relation(fields: [eventId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   Betterteams_players                         Betterteams_players[] @relation("betterteams_players_ibfk_1")
@@ -194,11 +194,11 @@ model TeamRegister {
   registerContext   String     @db.Text
   eventId           String
 
-  players       Players[]
+  players       Player[]
   event         Event @relation(fields: [eventId], references: [id])
 }
 
-model Players {
+model Player {
   id                  String            @id @default(cuid())
   nickname            String
   minecraftNickname   String
@@ -231,7 +231,7 @@ model Event {
   startDate     DateTime
   dueDate       DateTime
 
-  players         Players[]
+  players         Player[]
   Quests          Quests[]
   teamRegisters   TeamRegister[]
   teams           Betterteams_team[]

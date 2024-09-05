@@ -7,8 +7,8 @@ export const Footer = async () => {
     const settings = await getWebSiteSettings();
     return (
         <footer className="pb-2 pt-4 flex flex-col items-center justify-between gap-8 bg-secondary w-full m-auto text-foreground opacity-90">
-            <div className="container m-auto flex flex-col md:flex-row md:flex-wrap gap-x-10 gap-y-5 justify-center">
-                <Image src={logoWhite} alt="logo" width={70} height={70} className="min-w-12 object-contain" />
+            <div className="container m-auto flex flex-col md:flex-row md:flex-wrap gap-x-10 gap-y-5 justify-center items-center">
+                <Image src={logoWhite} alt="logo" width={70} height={70} className="w-16 h-w-16 object-contain" />
                 <div className="flex flex-col gap-2">
                     <h4 className="text-md font-bold uppercase">Infos</h4>
                     <Link href={'/rules'} className="text-sm">

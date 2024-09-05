@@ -46,10 +46,10 @@ export const displayMenuItem = async () => {
 
     const itemsMenuSuperAdmin: Item[] = [
         {
-            label: 'Équipe',
-            href: dashboardUrl + '/team',
+            label: 'Équipes',
+            href: dashboardUrl + '/teams',
             icon: <Users size={20} />,
-            description: "Gérer l'équipe",
+            description: 'Gérer les équipes',
         },
         {
             label: 'Administrateurs',

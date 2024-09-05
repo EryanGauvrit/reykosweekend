@@ -18,10 +18,7 @@ const FormSetEvent = ({ event }: { event?: Event }) => {
                 textSubmit="Sauvegarder"
                 description="Veuillez renseigner les informations de l'évènement à modifier."
                 actionFn={async (formData) => {
-                    const res = await updateEvent(formData);
-
-                    console.log(res);
-                    return res;
+                    return await updateEvent(formData);
                 }}
                 className="max-w-2xl max-h-[900px] overflow-auto"
                 size="icon"

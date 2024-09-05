@@ -11,7 +11,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { ButtonVariants } from '@/types/props/variant';
 import clsx from 'clsx';
 import ButtonSubmit from './ButtonSubmit';
@@ -46,7 +46,13 @@ const AlertDialogComp = ({
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <ButtonSubmit className={className} variant={variant} size={size} asChild={openHasChild} type={isSubmit ? 'submit' : 'button'}>
+                <ButtonSubmit
+                    className={className}
+                    variant={variant}
+                    size={size}
+                    asChild={openHasChild}
+                    type={isSubmit ? 'submit' : 'button'}
+                >
                     {openLabel}
                 </ButtonSubmit>
             </AlertDialogTrigger>

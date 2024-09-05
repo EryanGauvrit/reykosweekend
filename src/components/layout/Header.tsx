@@ -45,7 +45,7 @@ export const Header = (props: { children: React.ReactNode }) => {
         >
             <div className="flex justify-between md:justify-around items-center w-full md:w-auto px-5 md:px-2 py-5">
                 <Link href={'/'}>
-                    <Image priority src={logo} alt="logo" width={325} height={75} className="h-24 object-contain" />
+                    <Image priority src={logo} alt="logo" width={325} height={75} className="h-24 w-auto object-contain" />
                 </Link>
                 <ButtonBurger
                     className="md:hidden bg-transparent hover:bg-transparent hover:scale-110 duration-200"

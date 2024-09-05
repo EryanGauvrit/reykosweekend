@@ -4,7 +4,6 @@ import AlertDialogComp from '@/components/basics/AlertDialog';
 import Loader from '@/components/basics/Loader';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
-import { deleteLocation } from '@/services/eventService';
 import { QueryResponse } from '@/services/queryService';
 import { Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -46,7 +45,7 @@ const DeleteAction = ({ id, fnAction, title, description, messageValidation, cla
                 openLabel={<Trash size={20} />}
                 size="icon"
                 variant="destructive"
-                className={cn('w-8 h-8', className)}
+                className={cn(className)}
             />
             {isLoading && <Loader withoutPending />}
         </>

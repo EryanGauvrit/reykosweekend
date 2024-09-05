@@ -8,15 +8,50 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
+import { createTeamRegister } from '@/services/playerService';
+import { Player } from '@prisma/client';
 import { Plus, Trash } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const RegisterForm = ({ eventId }: { eventId: string }) => {
     const { toast } = useToast();
     const [nbrPlayer, setNbrPlayer] = useState(3);
+    const ref = useRef<HTMLFormElement>(null);
+
+    const onSubmit = async (formData: FormData) => {
+        const data = Object.fromEntries(formData.entries());
+        const players = [...Array(nbrPlayer)].map((_, i) => ({
+            nickname: data['nickname' + i] as string,
+            minecraftNickname: data['minecraftNickname' + i] as string,
+            email: data['email' + i] as string,
+            isOwner: data['isOwner' + i] === 'true',
+            eventId,
+        }));
+
+        const team = {
+            name: data.name,
+            registerContext: data.registerContext,
+            eventId: data.eventId,
+        };
+
+        const formDataQuery = new FormData();
+        formDataQuery.append('team', JSON.stringify(team));
+        formDataQuery.append('players', JSON.stringify(players));
+
+        const res = await createTeamRegister(formDataQuery);
+
+        if (res.isErrored) {
+            toast({ variant: 'destructive', title: "Erreur lors de la création de l'équipe." });
+            return;
+        }
+
+        toast({ variant: 'success', title: 'Ta demande a bien été envoyée.' });
+        ref.current?.reset();
+    };
+
     return (
         <CardContent>
-            <form className="flex flex-col gap-4 max-w-4xl w-full" action={(formData) => console.log(formData)}>
+            <form ref={ref} className="flex flex-col gap-4 max-w-4xl w-full" action={onSubmit}>
                 <div className="grid gap-2">
                     <Label htmlFor="name">Nom de l'équipe*</Label>
                     <Input required name="name" type="text" placeholder="Ma super équipe" />
@@ -51,11 +86,11 @@ const RegisterForm = ({ eventId }: { eventId: string }) => {
                     </h3>
                     <div className="grid md:grid-cols-2 gap-4">
                         <Card className="p-4">
-                            <FormPlayer isOwner />
+                            <FormPlayer isOwner nbrPlayer={0} />
                         </Card>
                         {[...Array(nbrPlayer - 1)].map((_, i) => (
                             <Card key={i} className="flex items-center gap-2 p-4">
-                                <FormPlayer nbrPlayer={i} />
+                                <FormPlayer nbrPlayer={i + 1} />
                                 <Button
                                     variant={'destructive'}
                                     disabled={nbrPlayer <= 3}
@@ -89,28 +124,45 @@ const RegisterForm = ({ eventId }: { eventId: string }) => {
 
 export default RegisterForm;
 
-const FormPlayer = ({ isOwner, nbrPlayer }: { isOwner?: boolean; nbrPlayer?: number }) => {
+export const FormPlayer = ({ isOwner, nbrPlayer, player }: { isOwner?: boolean; nbrPlayer?: number; player?: Player }) => {
     return (
         <div className="grid grid-cols-2 gap-2">
             {isOwner && (
                 <>
                     <h4 className="col-span-2 text-base font-bold">Chef de l'équipe</h4>
-                    <input type="hidden" name="isOwner" value="true" />
+                    <input type="hidden" name={'isOwner' + (nbrPlayer ? nbrPlayer?.toString() : '')} value="true" />
                 </>
             )}
             <div className="grid gap-2">
-                <Label htmlFor={'nickname' + nbrPlayer}>Nom / pseudo*</Label>
-                <Input required name={'nickname' + nbrPlayer} type="text" placeholder="Robert" />
+                <Label htmlFor={'nickname' + (nbrPlayer ? nbrPlayer?.toString() : '')}>Nom / pseudo*</Label>
+                <Input
+                    required
+                    name={'nickname' + (nbrPlayer ? nbrPlayer?.toString() : '')}
+                    type="text"
+                    placeholder="Robert"
+                    defaultValue={player?.nickname}
+                />
             </div>
             <div className="grid gap-2">
-                <Label htmlFor={'minecraftNickname' + nbrPlayer} className="min-w-32">
+                <Label htmlFor={'minecraftNickname' + (nbrPlayer ? nbrPlayer?.toString() : '')} className="min-w-32">
                     pseudo Minecraft*
                 </Label>
-                <Input required name={'minecraftNickname' + nbrPlayer} type="text" placeholder="KikouBg2005" />
+                <Input
+                    required
+                    name={'minecraftNickname' + (nbrPlayer ? nbrPlayer?.toString() : '')}
+                    type="text"
+                    placeholder="KikouBg2005"
+                    defaultValue={player?.minecraftNickname}
+                />
             </div>
             <div className="grid gap-2 col-span-2">
-                <Label htmlFor={'email' + nbrPlayer}>email</Label>
-                <Input name={'email' + nbrPlayer} type="email" placeholder="KikouBg2005@exemple.com" />
+                <Label htmlFor={'email' + (nbrPlayer ? nbrPlayer?.toString() : '')}>email</Label>
+                <Input
+                    name={'email' + (nbrPlayer ? nbrPlayer?.toString() : '')}
+                    type="email"
+                    placeholder="KikouBg2005@exemple.com"
+                    defaultValue={player?.email || undefined}
+                />
             </div>
         </div>
     );
