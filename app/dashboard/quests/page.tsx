@@ -1,10 +1,10 @@
 import prisma from '@/lib/prisma';
 import { nextEvent } from '@/services/eventService';
 import { auth } from 'auth';
-import { Users } from 'lucide-react';
+import { Shield, Users } from 'lucide-react';
 import { redirect } from 'next/navigation';
-import RegisterTeamDisplay from './RegisterTeamDisplay';
-import TeamDisplay from './TeamDisplay';
+import QuestsDisplay from './QuestsDisplay';
+import FormSetQuest from './FormSetQuest';
 
 const page = async () => {
     const session = await auth();
@@ -24,16 +24,16 @@ const page = async () => {
     return (
         <section>
             <h1 className="text-2xl font-bold uppercase flex items-center gap-2">
-                <Users size={26} />
-                Gestion des équipes
+                <Shield size={26} />
+                Gestion des quêtes
             </h1>
 
             {isErrored ? (
                 <div className="text-destructive">Erreur lors de la récupération de l'évènement</div>
             ) : (
-                <div className="mt-10 flex flex-col gap-5">
-                    <RegisterTeamDisplay eventId={data.id} />
-                    <TeamDisplay eventId={data.id} />
+                <div className="p-4 col-span-2 max-w-4xl w-full m-auto">
+                    <FormSetQuest eventId={data.id} />
+                    <QuestsDisplay eventId={data.id} />
                 </div>
             )}
         </section>

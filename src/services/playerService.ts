@@ -211,6 +211,13 @@ export type TeamWithAllInclude = Prisma.Betterteams_teamGetPayload<{
     };
 }>;
 
+export type Team = Prisma.Betterteams_teamGetPayload<{
+    select: {
+        teamID: true;
+        name: true;
+    };
+}>;
+
 export const teamListAll = wrapResponse(async (eventId: string) => {
     return await prisma.betterteams_team.findMany({
         where: {
@@ -231,8 +238,7 @@ export const teamListAll = wrapResponse(async (eventId: string) => {
     });
 });
 
-export const teamList = wrapResponse(async (formData: FormData) => {
-    const { eventId } = Object.fromEntries(formData) as Record<string, string>;
+export const teamList = wrapResponse(async (eventId: string) => {
     return await prisma.betterteams_team.findMany({
         where: {
             eventId,
@@ -257,14 +263,30 @@ export const createTeam = wrapResponse(async (formData: FormData) => {
     }
 
     return await prisma.betterteams_team.create({
-        data,
+        data: {
+            ...data,
+            name: data.name.trim().replace(' ', '_'),
+        },
     });
 });
 
-export const setScoreTeam = wrapResponse(async (formData: FormData) => {
-    await isAuthanticated();
+// export const setScoreTeam = wrapResponse(async (formData: FormData) => {
+//     await isAuthanticated();
 
-    const { teamId, score } = Object.fromEntries(formData) as Record<string, string>;
+//     const { teamId, score } = Object.fromEntries(formData) as Record<string, string>;
+
+//     return await prisma.betterteams_team.update({
+//         where: {
+//             teamID: teamId,
+//         },
+//         data: {
+//             score: +score,
+//         },
+//     });
+// });
+
+export const setScoreTeam = wrapResponse(async (teamId: string, score: number) => {
+    await isAuthanticated();
 
     return await prisma.betterteams_team.update({
         where: {

@@ -1,5 +1,5 @@
 import { isAdmin } from '@/services/authService';
-import { CalendarCog, PanelTop, Settings, Shield, TrendingUp, UserCog, Users } from 'lucide-react';
+import { CalendarCog, PanelTop, Settings, Shield, Swords, TrendingUp, UserCog, Users } from 'lucide-react';
 
 export interface Item {
     label: string;
@@ -19,16 +19,28 @@ export const displayMenuItem = async () => {
             description: '',
         },
         {
+            label: 'Équipes',
+            href: dashboardUrl + '/teams',
+            icon: <Users size={20} />,
+            description: 'Gérer les équipes',
+        },
+        {
+            label: 'Quêtes',
+            href: dashboardUrl + '/quests',
+            icon: <Shield size={20} />,
+            description: 'Gérer les quêtes',
+        },
+        {
+            label: 'Challenges',
+            href: dashboardUrl + '/challenges',
+            icon: <Swords size={20} />,
+            description: 'Gérer les challenges',
+        },
+        {
             label: 'Général',
             href: dashboardUrl + '/global',
             icon: <Settings size={20} />,
             description: 'Paramétrer les informations générales site internet',
-        },
-        {
-            label: 'Mon compte',
-            href: dashboardUrl + '/account',
-            icon: <UserCog size={20} />,
-            description: 'Gérer mon compte',
         },
         {
             label: "Page d'accueil",
@@ -37,19 +49,19 @@ export const displayMenuItem = async () => {
             description: "Paramétrer la page d'accueil",
         },
         {
-            label: 'Évènements',
-            href: dashboardUrl + '/events',
-            icon: <CalendarCog size={20} />,
-            description: 'Gérer les évènements',
+            label: 'Mon compte',
+            href: dashboardUrl + '/account',
+            icon: <UserCog size={20} />,
+            description: 'Gérer mon compte',
         },
     ];
 
     const itemsMenuSuperAdmin: Item[] = [
         {
-            label: 'Équipes',
-            href: dashboardUrl + '/teams',
-            icon: <Users size={20} />,
-            description: 'Gérer les équipes',
+            label: 'Évènements',
+            href: dashboardUrl + '/events',
+            icon: <CalendarCog size={20} />,
+            description: 'Gérer les évènements',
         },
         {
             label: 'Administrateurs',

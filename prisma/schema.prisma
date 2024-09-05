@@ -122,7 +122,7 @@ model Betterteams_team {
 
   ranking                                     EventGameRanking[]
   players                                     Player[]
-  quests                                      Quests[]
+  quests                                      Quest[]
   event                                       Event @relation(fields: [eventId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   Betterteams_players                         Betterteams_players[] @relation("betterteams_players_ibfk_1")
   Betterteams_chestclaims                     Betterteams_chestclaims[] @relation("betterteams_chestclaims_ibfk_1")
@@ -213,7 +213,7 @@ model Player {
   teamRegister        TeamRegister?      @relation(fields: [teamRegisterId], references: [id], onUpdate: SetNull, onDelete: SetNull)
 }
 
-model Quests {
+model Quest {
   id            String     @id @default(cuid())
   title         String
   description   String
@@ -232,7 +232,7 @@ model Event {
   dueDate       DateTime
 
   players         Player[]
-  Quests          Quests[]
+  Quests          Quest[]
   teamRegisters   TeamRegister[]
   teams           Betterteams_team[]
   EventInGame     EventInGame[]
