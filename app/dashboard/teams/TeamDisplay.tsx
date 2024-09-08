@@ -1,10 +1,10 @@
 import DeleteAction from '@/components/basics/DeleteAction';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { deleteTeam, teamListAll, TeamWithAllInclude } from '@/services/playerService';
+import { deleteTeam, getTeamListAll, TeamWithAllInclude } from '@/services/playerService';
 
 const TeamDisplay = async ({ eventId }: { eventId: string }) => {
-    const res = await teamListAll(eventId);
+    const res = await getTeamListAll(eventId);
 
     const teams: TeamWithAllInclude[] = !res.isErrored && res.data;
 

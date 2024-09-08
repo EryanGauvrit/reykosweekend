@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/lib/prisma';
-import { playerListSchema, playerSchema, teamRegisterSchema, teamSchema, updatePlayerListSchema } from '@/lib/zod/playerSchema';
+import { playerListSchema, playerSchema, teamRegisterSchema, teamSchema } from '@/lib/zod/playerSchema';
 import { Prisma } from '@prisma/client';
 import { isAuthanticated } from './authService';
 import { wrapResponse } from './queryService';
@@ -218,7 +218,7 @@ export type Team = Prisma.Betterteams_teamGetPayload<{
     };
 }>;
 
-export const teamListAll = wrapResponse(async (eventId: string) => {
+export const getTeamListAll = wrapResponse(async (eventId: string) => {
     return await prisma.betterteams_team.findMany({
         where: {
             eventId,
@@ -238,7 +238,7 @@ export const teamListAll = wrapResponse(async (eventId: string) => {
     });
 });
 
-export const teamList = wrapResponse(async (eventId: string) => {
+export const getTeamList = wrapResponse(async (eventId: string) => {
     return await prisma.betterteams_team.findMany({
         where: {
             eventId,

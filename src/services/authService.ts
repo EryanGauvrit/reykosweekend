@@ -61,6 +61,21 @@ export const isAuthanticated = async (): Promise<User> => {
     return session.user;
 };
 
+export const userIsAuthorized = async (): Promise<Boolean> => {
+    const session = await auth();
+    if (!session || !session.user) {
+        return false;
+    }
+
+    const dbUser = await prisma.user.findUnique({
+        where: {
+            email: session.user.email as string,
+        },
+    });
+
+    return dbUser ? true : false;
+};
+
 export const isAdmin = async (): Promise<boolean> => {
     const user = await isAuthanticated();
     const dbUser = await prisma.user.findUnique({

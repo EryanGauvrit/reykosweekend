@@ -1,5 +1,7 @@
+import NoEventPlannified from '@/components/context/NoEventPlannified';
 import prisma from '@/lib/prisma';
 import { getNextEvent } from '@/services/eventService';
+import { Event } from '@prisma/client';
 import { auth } from 'auth';
 import { Users } from 'lucide-react';
 import { redirect } from 'next/navigation';
@@ -19,7 +21,11 @@ const page = async () => {
         redirect('/dashboard');
     }
 
-    const { data, isErrored } = await getNextEvent();
+    const { data, isErrored }: { data?: Event; isErrored: boolean } = await getNextEvent();
+
+    if (!data) {
+        return <NoEventPlannified social={false} />;
+    }
 
     return (
         <section>

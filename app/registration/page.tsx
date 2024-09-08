@@ -23,7 +23,7 @@ const page = async () => {
                     <NextEventCountDown startDate={dateLimitInscription} title="Fin des inscriptions dans" className="mb-5" />
                     <Card className="px-10 py-5">
                         <CardHeader className="flex flex-col items-center gap-2">
-                            <h1 className="text-2xl font-bold">Inscription: {data?.title}</h1>
+                            <h1 className="text-3xl uppercase font-bold">Inscription: {data?.title}</h1>
                             <h2 className="text-lg font-semibold">
                                 {formatStartEndDate(new Date(data.startDate), new Date(data.dueDate))}
                             </h2>
@@ -35,7 +35,7 @@ const page = async () => {
             ) : (
                 <Card className="px-10 py-5">
                     <CardHeader className="flex flex-col items-center gap-2">
-                        <h1 className="text-2xl font-bold">Inscription: {data?.title}</h1>
+                        <h1 className="text-3xl uppercase font-bold">Inscription: {data?.title}</h1>
                         <h2 className="text-lg font-semibold">{formatStartEndDate(new Date(data.startDate), new Date(data.dueDate))}</h2>
                         <CardDescription>Les inscriptions pour cet événement sont terminées.</CardDescription>
                     </CardHeader>

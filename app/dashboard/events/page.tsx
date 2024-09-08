@@ -2,7 +2,7 @@ import { CalendarCog } from 'lucide-react';
 import EventDisplay from './EventDisplay';
 import FormSetEvent from './FormSetEvent';
 
-const page = async (props: any) => {
+const page = async () => {
     return (
         <section className="flex flex-col gap-4">
             <h1 className="text-2xl font-bold uppercase flex items-center gap-2">
