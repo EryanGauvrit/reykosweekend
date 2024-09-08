@@ -10,7 +10,7 @@ import { Users2 } from 'lucide-react';
 const FormRemoveTeamQuest = ({ quest }: { quest: QuestWhithAllInclude }) => {
     return (
         <DialogForm
-            title="Gestion de validation de quête"
+            title="Annulation de validation de quête"
             textOpen={<Users2 size={20} />}
             textSubmit="Sauvegarder"
             description="Veuillez selectionner l'équipe qui n'a pas réussi cette quête."

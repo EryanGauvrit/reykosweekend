@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma';
 import { questSchema } from '@/lib/zod/questSchema';
 import { Prisma } from '@prisma/client';
 import { isAuthanticated } from './authService';
+import { setScoreTeam } from './playerService';
 import { wrapResponse } from './queryService';
 
 export type QuestWhithAllInclude = Prisma.QuestGetPayload<{
@@ -124,6 +125,12 @@ export const validateQuest = wrapResponse(async (formData: FormData) => {
         throw new Error('Team not found');
     }
 
+    const teamUpdateRes = await setScoreTeam(teamId, quest.scoreReward);
+
+    if (teamUpdateRes.isErrored) {
+        throw new Error(teamUpdateRes.data);
+    }
+
     return await prisma.quest.update({
         where: {
             id: questId,
@@ -161,6 +168,12 @@ export const unvalidateQuest = wrapResponse(async (formData: FormData) => {
 
     if (!team) {
         throw new Error('Team not found');
+    }
+
+    const teamUpdateRes = await setScoreTeam(teamId, -quest.scoreReward);
+
+    if (teamUpdateRes.isErrored) {
+        throw new Error(teamUpdateRes.data);
     }
 
     return await prisma.quest.update({

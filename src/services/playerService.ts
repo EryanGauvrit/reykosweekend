@@ -270,21 +270,6 @@ export const createTeam = wrapResponse(async (formData: FormData) => {
     });
 });
 
-// export const setScoreTeam = wrapResponse(async (formData: FormData) => {
-//     await isAuthanticated();
-
-//     const { teamId, score } = Object.fromEntries(formData) as Record<string, string>;
-
-//     return await prisma.betterteams_team.update({
-//         where: {
-//             teamID: teamId,
-//         },
-//         data: {
-//             score: +score,
-//         },
-//     });
-// });
-
 export const setScoreTeam = wrapResponse(async (teamId: string, score: number) => {
     await isAuthanticated();
 
@@ -293,7 +278,9 @@ export const setScoreTeam = wrapResponse(async (teamId: string, score: number) =
             teamID: teamId,
         },
         data: {
-            score: +score,
+            score: {
+                increment: score,
+            },
         },
     });
 });

@@ -1,17 +1,25 @@
+import DialogForm from '@/components/basics/DialogForm';
 import DisplayImage from '@/components/basics/DisplayImage';
+import DisplayValueUpdateTrigger from '@/components/basics/DisplayValueUpdateTrigger';
 import NextEventCountDown from '@/components/context/NextEventCountDown';
 import NoEventPlannified from '@/components/context/NoEventPlannified';
+import NoWebSiteSettings from '@/components/context/NoWebSiteSettings';
 import { buttonVariants } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import prisma from '@/lib/prisma';
 import { IMAGE_SIZE } from '@/lib/utils';
 import { getNextEvent } from '@/services/eventService';
+import { updateWebSiteSettings } from '@/services/webSiteSettingsService';
+import { Event } from '@prisma/client';
 import clsx from 'clsx';
+import { add, isFuture, isPast } from 'date-fns';
+import { Pencil } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function Home() {
     const homeSettings = await prisma.webSiteSettings.findFirst();
-    const { data, isErrored } = await getNextEvent();
+    const { data, isErrored }: { data: Event; isErrored: boolean } = await getNextEvent();
 
     const pictureSettingsPhone1 = {
         url: homeSettings?.imageMobile?.split('#')[0],
@@ -34,31 +42,7 @@ export default async function Home() {
     };
 
     if (!homeSettings) {
-        return (
-            <main className="flex flex-col items-center gap-10 p-24 flex-1">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Page d'accueil</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <CardDescription>La page d'accueil n'est pas encore configurée. Veuillez la configurer.</CardDescription>
-                    </CardContent>
-                    <CardFooter>
-                        <Link
-                            href="/dashboard/set-homepage"
-                            className={clsx(
-                                buttonVariants({
-                                    variant: 'success',
-                                    size: 'default',
-                                }),
-                            )}
-                        >
-                            Configurer la page d'accueil
-                        </Link>
-                    </CardFooter>
-                </Card>
-            </main>
-        );
+        return <NoWebSiteSettings />;
     }
 
     if (!data || isErrored) {
@@ -68,6 +52,8 @@ export default async function Home() {
     const titleSegment = homeSettings.title.split(': ');
     const titleSecondSegment = titleSegment[1];
     const titleFirstSegment = titleSegment[0] + `${titleSecondSegment ? ':' : ''}`;
+
+    const dateLimitInscription = add(data.startDate, { days: -1 });
 
     return (
         <main className="flex flex-col gap-40 py-24 flex-1">
@@ -83,8 +69,7 @@ export default async function Home() {
                     />
                 </span>
             )}
-            <NextEventCountDown startDate={data.startDate} />
-            {/* <section className="container flex gap-16 xl:gap-5 flex-wrap justify-center xl:justify-between">
+            <section className="container flex gap-16 xl:gap-5 flex-wrap justify-center xl:justify-around">
                 <article className="flex flex-col gap-10 max-w-xl">
                     <DisplayValueUpdateTrigger>
                         <h1 className={clsx('text-3xl uppercase font-bold')}>
@@ -123,24 +108,23 @@ export default async function Home() {
                         </DialogForm>
                     </DisplayValueUpdateTrigger>
                     <div className="flex flex-col mt-14 md:flex-row gap-5 items-center">
-                        <Link href="/registration" className={clsx(buttonVariants({ variant: 'default', size: 'default' }))}>
-                            Faire une demande d'inscription
-                        </Link>
+                        {isFuture(dateLimitInscription) && (
+                            <Link href="/registration" className={clsx(buttonVariants({ variant: 'default', size: 'default' }))}>
+                                Faire une demande d'inscription
+                            </Link>
+                        )}
+                        {isPast(data.startDate) && (
+                            <Link href="/quests" className={clsx(buttonVariants({ variant: 'default', size: 'default' }))}>
+                                Liste des quêtes
+                            </Link>
+                        )}
                         <Link href="/rules" className={clsx(buttonVariants({ variant: 'outline', size: 'default' }))}>
                             Règles de base
                         </Link>
                     </div>
                 </article>
-                {homeSettings.video && (
-                    <YoutubeEmbed
-                        embedId={getEmbedId(homeSettings.video)}
-                        width={560}
-                        height={315}
-                        title="YouTube video player"
-                        // className="hidden md:flex"
-                    />
-                )}
-            </section> */}
+                {isFuture(data.startDate) && <NextEventCountDown startDate={data.startDate} />}
+            </section>
         </main>
     );
 }

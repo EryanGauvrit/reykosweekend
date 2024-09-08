@@ -10,7 +10,7 @@ import { Users2 } from 'lucide-react';
 const FormAddTeamQuest = ({ quest, teams }: { quest: QuestWhithAllInclude; teams: Team[] }) => {
     return (
         <DialogForm
-            title="Gestion de validation de quête"
+            title="Validation de quête"
             textOpen={<Users2 size={20} />}
             textSubmit="Sauvegarder"
             description="Veuillez selectionner l'équipe' ayant validé cette quête."

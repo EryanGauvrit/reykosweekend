@@ -52,6 +52,7 @@ const FormSetEvent = ({ event }: { event?: Event }) => {
 export default FormSetEvent;
 
 const FormContent = ({ event }: { event?: Event }) => {
+    event && console.log(format(event.startDate || '', 'yyyy-MM-dd HH:mm').replace(' ', 'T'));
     return (
         <>
             <div className="grid gap-2">
@@ -75,7 +76,7 @@ const FormContent = ({ event }: { event?: Event }) => {
                         id="startDate"
                         type="datetime-local"
                         name="startDate"
-                        defaultValue={event?.startDate && format(event.startDate || '', 'yyyy-MM-dd')}
+                        defaultValue={event?.startDate && format(event.startDate || '', 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
                     />
                 </div>
                 <div className="grid gap-2">
@@ -86,7 +87,7 @@ const FormContent = ({ event }: { event?: Event }) => {
                         id="dueDate"
                         type="datetime-local"
                         name="dueDate"
-                        defaultValue={event?.dueDate && format(event.dueDate || '', 'yyyy-MM-dd')}
+                        defaultValue={event?.dueDate && format(event.dueDate || '', 'yyyy-MM-dd HH:mm').replace(' ', 'T')}
                     />
                 </div>
             </div>

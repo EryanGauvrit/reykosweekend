@@ -11,11 +11,11 @@ const page = async () => {
 
     return (
         <main className="flex-1 container max-w-5xl">
-            <Card className="p-6 my-10">
+            <Card className="px-10 py-5 my-10">
                 <CardHeader>
                     <h1 className="text-2xl font-bold">⚠️⚠️ Les 11 commandements du serveur ⚠️⚠️</h1>
                 </CardHeader>
-                <CardContent className=" flex flex-col gap-6">
+                <CardContent className="flex flex-col gap-6">
                     <p>⚔️ Plongez dans une aventure Hardcore en survie à vivre en équipe durant un week-end intense !</p>
                     <ol className="list-decimal flex flex-col gap-4 max-w-3xl w-full m-auto">
                         <li>Équipes de 3 à 5 joueurs : Formez votre groupe et préparez-vous pour 48 heures de survie acharnée.</li>
