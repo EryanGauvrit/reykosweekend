@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma';
-import { nextEvent } from '@/services/eventService';
+import { getNextEvent } from '@/services/eventService';
 import { auth } from 'auth';
-import { Shield, Swords, Users } from 'lucide-react';
+import { Swords } from 'lucide-react';
 import { redirect } from 'next/navigation';
 
 const page = async () => {
@@ -17,7 +17,7 @@ const page = async () => {
         redirect('/dashboard');
     }
 
-    const { data, isErrored } = await nextEvent();
+    const { data, isErrored } = await getNextEvent();
 
     return (
         <main>

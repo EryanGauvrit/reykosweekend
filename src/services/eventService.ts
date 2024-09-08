@@ -40,10 +40,10 @@ export type EventWithRegistration = Prisma.EventGetPayload<{
     };
 }>;
 
-export const nextEvent = wrapResponse(async () => {
+export const getNextEvent = wrapResponse(async () => {
     return await prisma.event.findFirst({
         where: {
-            startDate: {
+            dueDate: {
                 gte: new Date(),
             },
         },

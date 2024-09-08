@@ -1,10 +1,10 @@
 import prisma from '@/lib/prisma';
-import { nextEvent } from '@/services/eventService';
+import { getNextEvent } from '@/services/eventService';
 import { auth } from 'auth';
-import { Shield, Users } from 'lucide-react';
+import { Shield } from 'lucide-react';
 import { redirect } from 'next/navigation';
-import QuestsDisplay from './QuestsDisplay';
 import FormSetQuest from './FormSetQuest';
+import QuestsDisplay from './QuestsDisplay';
 
 const page = async () => {
     const session = await auth();
@@ -19,7 +19,7 @@ const page = async () => {
         redirect('/dashboard');
     }
 
-    const { data, isErrored } = await nextEvent();
+    const { data, isErrored } = await getNextEvent();
 
     return (
         <section>

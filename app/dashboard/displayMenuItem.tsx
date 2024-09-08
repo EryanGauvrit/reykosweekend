@@ -1,5 +1,5 @@
 import { isAdmin } from '@/services/authService';
-import { CalendarCog, PanelTop, Settings, Shield, Swords, TrendingUp, UserCog, Users } from 'lucide-react';
+import { CalendarCog, PanelTop, Settings, Shield, ShieldQuestion, Swords, TrendingUp, UserCog, Users } from 'lucide-react';
 
 export interface Item {
     label: string;
@@ -27,7 +27,7 @@ export const displayMenuItem = async () => {
         {
             label: 'Quêtes',
             href: dashboardUrl + '/quests',
-            icon: <Shield size={20} />,
+            icon: <ShieldQuestion size={20} />,
             description: 'Gérer les quêtes',
         },
         {

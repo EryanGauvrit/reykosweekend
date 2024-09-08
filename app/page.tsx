@@ -1,22 +1,17 @@
-import DialogForm from '@/components/basics/DialogForm';
 import DisplayImage from '@/components/basics/DisplayImage';
-import DisplayValueUpdateTrigger from '@/components/basics/DisplayValueUpdateTrigger';
-import Loader from '@/components/basics/Loader';
-import YoutubeEmbed from '@/components/basics/YoutubeEmbed';
+import NextEventCountDown from '@/components/context/NextEventCountDown';
+import NoEventPlannified from '@/components/context/NoEventPlannified';
 import { buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import prisma from '@/lib/prisma';
-import { getEmbedId, IMAGE_SIZE } from '@/lib/utils';
-import { updateWebSiteSettings } from '@/services/webSiteSettingsService';
+import { IMAGE_SIZE } from '@/lib/utils';
+import { getNextEvent } from '@/services/eventService';
 import clsx from 'clsx';
-import { Pencil } from 'lucide-react';
 import Link from 'next/link';
-import { montaga } from '../style/fonts/font';
 
 export default async function Home() {
     const homeSettings = await prisma.webSiteSettings.findFirst();
+    const { data, isErrored } = await getNextEvent();
 
     const pictureSettingsPhone1 = {
         url: homeSettings?.imageMobile?.split('#')[0],
@@ -66,6 +61,10 @@ export default async function Home() {
         );
     }
 
+    if (!data || isErrored) {
+        return <NoEventPlannified />;
+    }
+
     const titleSegment = homeSettings.title.split(': ');
     const titleSecondSegment = titleSegment[1];
     const titleFirstSegment = titleSegment[0] + `${titleSecondSegment ? ':' : ''}`;
@@ -74,7 +73,7 @@ export default async function Home() {
         <main className="flex flex-col gap-40 py-24 flex-1">
             {homeSettings.imageDesktop && homeSettings.imageMobile && (
                 <span className="absolute -z-10 top-0 w-full opacity-80">
-                    <span className="absolute top-0 w-full h-full from-transparent to-background from-10% bg-gradient-to-b" />
+                    <span className="absolute top-0 w-full h-full from-background via-transparent to-background bg-gradient-to-b" />
                     <DisplayImage
                         phone={pictureSettingsPhone1}
                         desktop={pictureSettingsDesktop1}
@@ -84,10 +83,11 @@ export default async function Home() {
                     />
                 </span>
             )}
-            <section className="container flex gap-16 xl:gap-5 flex-wrap justify-center xl:justify-between">
+            <NextEventCountDown startDate={data.startDate} />
+            {/* <section className="container flex gap-16 xl:gap-5 flex-wrap justify-center xl:justify-between">
                 <article className="flex flex-col gap-10 max-w-xl">
                     <DisplayValueUpdateTrigger>
-                        <h1 className={clsx(montaga.className, 'text-3xl')}>
+                        <h1 className={clsx('text-3xl uppercase font-bold')}>
                             {titleFirstSegment}
                             <br />
                             {titleSecondSegment}
@@ -123,11 +123,11 @@ export default async function Home() {
                         </DialogForm>
                     </DisplayValueUpdateTrigger>
                     <div className="flex flex-col mt-14 md:flex-row gap-5 items-center">
-                        <Link href="/spectacles" className={clsx(buttonVariants({ variant: 'default', size: 'default' }))}>
-                            Découvrez nos spectacles
+                        <Link href="/registration" className={clsx(buttonVariants({ variant: 'default', size: 'default' }))}>
+                            Faire une demande d'inscription
                         </Link>
-                        <Link href="/compagnie" className={clsx(buttonVariants({ variant: 'outline', size: 'default' }))}>
-                            En savoir plus sur la compagnie
+                        <Link href="/rules" className={clsx(buttonVariants({ variant: 'outline', size: 'default' }))}>
+                            Règles de base
                         </Link>
                     </div>
                 </article>
@@ -140,8 +140,7 @@ export default async function Home() {
                         // className="hidden md:flex"
                     />
                 )}
-            </section>
-            <Loader />
+            </section> */}
         </main>
     );
 }

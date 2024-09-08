@@ -1,34 +1,29 @@
+import NextEventCountDown from '@/components/context/NextEventCountDown';
+import NoEventPlannified from '@/components/context/NoEventPlannified';
 import { Card, CardDescription, CardHeader } from '@/components/ui/card';
 import { formatStartEndDate } from '@/lib/utils';
-import { nextEvent } from '@/services/eventService';
+import { getNextEvent } from '@/services/eventService';
 import { Event } from '@prisma/client';
 import RegisterForm from './RegisterForm';
+import { add } from 'date-fns';
 
 const page = async () => {
-    const res = await nextEvent();
+    const { data, isErrored }: { data: Event; isErrored: boolean } = await getNextEvent();
 
-    const event = res.data as Event;
-
-    if (!event || !event.id) {
-        return (
-            <main className="flex-1 flex flex-col items-center">
-                <section className="flex flex-col items-center gap-2">
-                    <h1 className="text-3xl font-bold">Aucun évènement à venir</h1>
-                    <p>Il n'y a aucun évènement prévu pour le moment.</p>
-                </section>
-            </main>
-        );
+    if (!data || isErrored) {
+        return <NoEventPlannified />;
     }
 
     return (
         <main className="flex-1 flex flex-col items-center my-5">
+            <NextEventCountDown startDate={add(data.startDate, { days: -1 })} title="Fin des inscriptions dans" className="mb-5" />
             <Card className="px-10 py-5">
                 <CardHeader className="flex flex-col items-center gap-2">
-                    <h1 className="text-2xl font-bold">Inscription: {event?.title}</h1>
-                    <h2 className="text-lg font-semibold">{formatStartEndDate(new Date(event.startDate), new Date(event.dueDate))}</h2>
+                    <h1 className="text-2xl font-bold">Inscription: {data?.title}</h1>
+                    <h2 className="text-lg font-semibold">{formatStartEndDate(new Date(data.startDate), new Date(data.dueDate))}</h2>
                     <CardDescription>Remplisser le formulaire ci-dessous pour faire une demande d'inscription.</CardDescription>
                 </CardHeader>
-                <RegisterForm eventId={event.id} />
+                <RegisterForm eventId={data.id} />
             </Card>
         </main>
     );

@@ -1,6 +1,14 @@
+import NoEventPlannified from '@/components/context/NoEventPlannified';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { getNextEvent } from '@/services/eventService';
 
-const page = () => {
+const page = async () => {
+    const { data, isErrored } = await getNextEvent();
+
+    if (!data || isErrored) {
+        return <NoEventPlannified />;
+    }
+
     return (
         <main className="flex-1 container max-w-5xl">
             <Card className="p-6 my-10">
