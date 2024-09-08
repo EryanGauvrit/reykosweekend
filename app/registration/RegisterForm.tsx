@@ -11,6 +11,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { createTeamRegister } from '@/services/playerService';
 import { Player } from '@prisma/client';
 import { Plus, Trash } from 'lucide-react';
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 
 const RegisterForm = ({ eventId }: { eventId: string }) => {
@@ -20,6 +21,7 @@ const RegisterForm = ({ eventId }: { eventId: string }) => {
 
     const onSubmit = async (formData: FormData) => {
         const data = Object.fromEntries(formData.entries());
+        console.log(data);
         const players = [...Array(nbrPlayer)].map((_, i) => ({
             nickname: data['nickname' + i] as string,
             minecraftNickname: data['minecraftNickname' + i] as string,
@@ -27,6 +29,7 @@ const RegisterForm = ({ eventId }: { eventId: string }) => {
             isOwner: data['isOwner' + i] === 'true',
             eventId,
         }));
+        console.log(players);
 
         const team = {
             name: data.name,
@@ -114,6 +117,16 @@ const RegisterForm = ({ eventId }: { eventId: string }) => {
                         ))}
                     </div>
                 </div>
+                <p>
+                    <span className="text-xs">* Champs obligatoires</span>
+                </p>
+                <p>
+                    En envoyant cette demande, vous acceptez les{' '}
+                    <Link href={'/rules'} className="underline">
+                        règles
+                    </Link>{' '}
+                    et le chef désigné de l'équipe accepte d'être le contact principal pour l'organisation de l'évènement.
+                </p>
                 <input type="hidden" name="eventId" value={eventId} />
                 <ButtonSubmit type="submit">Envoyé la demande</ButtonSubmit>
                 <Loader />
@@ -130,38 +143,39 @@ export const FormPlayer = ({ isOwner, nbrPlayer, player }: { isOwner?: boolean; 
             {isOwner && (
                 <>
                     <h4 className="col-span-2 text-base font-bold">Chef de l'équipe</h4>
-                    <input type="hidden" name={'isOwner' + (nbrPlayer ? nbrPlayer?.toString() : '')} value="true" />
+                    <input type="hidden" name={'isOwner' + (nbrPlayer ? nbrPlayer?.toString() : '0')} value="true" />
                 </>
             )}
             <div className="grid gap-2">
-                <Label htmlFor={'nickname' + (nbrPlayer ? nbrPlayer?.toString() : '')}>Nom / pseudo*</Label>
+                <Label htmlFor={'nickname' + (nbrPlayer ? nbrPlayer?.toString() : '0')}>Nom / pseudo*</Label>
                 <Input
                     required
-                    name={'nickname' + (nbrPlayer ? nbrPlayer?.toString() : '')}
+                    name={'nickname' + (nbrPlayer ? nbrPlayer?.toString() : '0')}
                     type="text"
                     placeholder="Robert"
                     defaultValue={player?.nickname}
                 />
             </div>
             <div className="grid gap-2">
-                <Label htmlFor={'minecraftNickname' + (nbrPlayer ? nbrPlayer?.toString() : '')} className="min-w-32">
+                <Label htmlFor={'minecraftNickname' + (nbrPlayer ? nbrPlayer?.toString() : '0')} className="min-w-32">
                     pseudo Minecraft*
                 </Label>
                 <Input
                     required
-                    name={'minecraftNickname' + (nbrPlayer ? nbrPlayer?.toString() : '')}
+                    name={'minecraftNickname' + (nbrPlayer ? nbrPlayer?.toString() : '0')}
                     type="text"
                     placeholder="KikouBg2005"
                     defaultValue={player?.minecraftNickname}
                 />
             </div>
             <div className="grid gap-2 col-span-2">
-                <Label htmlFor={'email' + (nbrPlayer ? nbrPlayer?.toString() : '')}>email</Label>
+                <Label htmlFor={'email' + (nbrPlayer ? nbrPlayer?.toString() : '0')}>email{isOwner && '*'}</Label>
                 <Input
-                    name={'email' + (nbrPlayer ? nbrPlayer?.toString() : '')}
+                    name={'email' + (nbrPlayer ? nbrPlayer?.toString() : '0')}
                     type="email"
                     placeholder="KikouBg2005@exemple.com"
                     defaultValue={player?.email || undefined}
+                    required={isOwner}
                 />
             </div>
         </div>

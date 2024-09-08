@@ -106,7 +106,7 @@ model Authenticator {
 }
 
 model Betterteams_team {
-  teamID        String     @id @default(cuid())
+  teamID        String     @id @default(uuid())
   name          String
   description   String?
   open          Boolean   @default(false)
@@ -189,7 +189,7 @@ model Betterteams_warps {
 }
 
 model TeamRegister {
-  id                String     @id @default(cuid())
+  id                String     @id @default(uuid())
   name              String
   registerContext   String     @db.Text
   eventId           String
@@ -199,7 +199,7 @@ model TeamRegister {
 }
 
 model Player {
-  id                  String            @id @default(cuid())
+  id                  String            @id @default(uuid())
   nickname            String
   minecraftNickname   String
   email               String?
@@ -214,7 +214,7 @@ model Player {
 }
 
 model Quest {
-  id            String     @id @default(cuid())
+  id            String     @id @default(uuid())
   title         String
   description   String
   scoreReward   Int
@@ -225,7 +225,7 @@ model Quest {
 }
 
 model Event {
-  id            String     @id @default(cuid())
+  id            String     @id @default(uuid())
   title         String
   description   String     @db.Text
   startDate     DateTime
@@ -239,7 +239,7 @@ model Event {
 }
 
 model EventInGame {
-  id                  String     @id @default(cuid())
+  id                  String     @id @default(uuid())
   title               String
   description         String
   startDate           DateTime
@@ -257,7 +257,7 @@ model EventInGame {
 }
 
 model EventGameRanking {
-  id            String     @id @default(cuid())
+  id            String     @id @default(uuid())
   teamId        String
   rankPosition  Int
   eventInGameId String

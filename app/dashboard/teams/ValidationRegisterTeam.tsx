@@ -3,9 +3,9 @@
 import AlertDialogComp from '@/components/basics/AlertDialog';
 import Loader from '@/components/basics/Loader';
 import { useToast } from '@/components/ui/use-toast';
-import { createTeam, playerList, updateTeamPlayers } from '@/services/playerService';
+import { createTeam, updateTeamPlayers } from '@/services/playerService';
 import { TeamRegister } from '@prisma/client';
-import { UsersRound, Wrench } from 'lucide-react';
+import { UsersRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 

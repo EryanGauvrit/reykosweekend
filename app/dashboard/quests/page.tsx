@@ -5,8 +5,8 @@ import { Event } from '@prisma/client';
 import { auth } from 'auth';
 import { ShieldQuestion } from 'lucide-react';
 import { redirect } from 'next/navigation';
+import QuestsDisplay from '../../../src/components/context/QuestsDisplay';
 import FormSetQuest from './FormSetQuest';
-import QuestsDisplay from './QuestsDisplay';
 
 const page = async () => {
     const session = await auth();

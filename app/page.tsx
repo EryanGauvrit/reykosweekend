@@ -1,6 +1,7 @@
 import DialogForm from '@/components/basics/DialogForm';
 import DisplayImage from '@/components/basics/DisplayImage';
 import DisplayValueUpdateTrigger from '@/components/basics/DisplayValueUpdateTrigger';
+import GeneralRanking from '@/components/context/GeneralRanking';
 import NextEventCountDown from '@/components/context/NextEventCountDown';
 import NoEventPlannified from '@/components/context/NoEventPlannified';
 import NoWebSiteSettings from '@/components/context/NoWebSiteSettings';
@@ -19,7 +20,7 @@ import Link from 'next/link';
 
 export default async function Home() {
     const homeSettings = await prisma.webSiteSettings.findFirst();
-    const { data, isErrored }: { data: Event; isErrored: boolean } = await getNextEvent();
+    const { data: event, isErrored }: { data: Event; isErrored: boolean } = await getNextEvent();
 
     const pictureSettingsPhone1 = {
         url: homeSettings?.imageMobile?.split('#')[0],
@@ -45,7 +46,7 @@ export default async function Home() {
         return <NoWebSiteSettings />;
     }
 
-    if (!data || isErrored) {
+    if (!event || isErrored) {
         return <NoEventPlannified />;
     }
 
@@ -53,18 +54,18 @@ export default async function Home() {
     const titleSecondSegment = titleSegment[1];
     const titleFirstSegment = titleSegment[0] + `${titleSecondSegment ? ':' : ''}`;
 
-    const dateLimitInscription = add(data.startDate, { days: -1 });
+    const dateLimitInscription = add(event.startDate, { days: -1 });
 
     return (
         <main className="flex flex-col gap-40 py-24 flex-1">
             {homeSettings.imageDesktop && homeSettings.imageMobile && (
-                <span className="absolute -z-10 top-0 w-full opacity-80">
-                    <span className="absolute top-0 w-full h-full from-background via-transparent to-background bg-gradient-to-b" />
+                <span className="fixed -z-10 top-0 w-full opacity-70">
+                    <span className="fixed top-0 w-full h-full from-background via-transparent to-background bg-gradient-to-b" />
                     <DisplayImage
                         phone={pictureSettingsPhone1}
                         desktop={pictureSettingsDesktop1}
                         alt={homeSettings?.title || ''}
-                        className={`h-[745px] w-full object-cover object-center`}
+                        className={`h-[1080px] w-full object-cover object-center`}
                         priority
                     />
                 </span>
@@ -109,21 +110,22 @@ export default async function Home() {
                     </DisplayValueUpdateTrigger>
                     <div className="flex flex-col mt-14 md:flex-row gap-5 items-center">
                         {isFuture(dateLimitInscription) && (
-                            <Link href="/registration" className={clsx(buttonVariants({ variant: 'default', size: 'default' }))}>
+                            <Link href="/registration" className={clsx(buttonVariants({ variant: 'default', size: 'lg' }))}>
                                 Faire une demande d'inscription
                             </Link>
                         )}
-                        {isPast(data.startDate) && (
-                            <Link href="/quests" className={clsx(buttonVariants({ variant: 'default', size: 'default' }))}>
+                        {isPast(event.startDate) && (
+                            <Link href="/quests" className={clsx(buttonVariants({ variant: 'default', size: 'lg' }))}>
                                 Liste des quêtes
                             </Link>
                         )}
-                        <Link href="/rules" className={clsx(buttonVariants({ variant: 'outline', size: 'default' }))}>
+                        <Link href="/rules" className={clsx(buttonVariants({ variant: 'outline', size: 'lg' }))}>
                             Règles de base
                         </Link>
                     </div>
                 </article>
-                {isFuture(data.startDate) && <NextEventCountDown startDate={data.startDate} />}
+                {isFuture(event.startDate) && <NextEventCountDown startDate={event.startDate} />}
+                {isPast(event.startDate) && <GeneralRanking eventId={event.id} />}
             </section>
         </main>
     );

@@ -6,9 +6,9 @@ import { userIsAuthorized } from '@/services/authService';
 import { getTeamList, Team } from '@/services/playerService';
 import { deleteQuest, getQuestsList, QuestWhithAllInclude } from '@/services/questService';
 import { Eye } from 'lucide-react';
-import FormAddTeamQuest from './FormAddTeamQuest';
-import FormRemoveTeamQuest from './FormRemoveTeamQuest';
-import FormSetQuest from './FormSetQuest';
+import FormAddTeamQuest from '../../../app/dashboard/quests/FormAddTeamQuest';
+import FormRemoveTeamQuest from '../../../app/dashboard/quests/FormRemoveTeamQuest';
+import FormSetQuest from '../../../app/dashboard/quests/FormSetQuest';
 
 const QuestsDisplay = async ({ eventId }: { eventId: string }) => {
     const { data: quests, isErrored: questErr }: { data: QuestWhithAllInclude[]; isErrored: boolean } = await getQuestsList(eventId);

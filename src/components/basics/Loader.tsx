@@ -2,24 +2,24 @@
 
 import { cn } from '@/lib/utils';
 import { LoaderCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 type LoaderProps = {
     className?: string;
     inComponent?: boolean;
     withoutPending?: boolean;
+    size?: number;
 };
 
-const Loader = ({ className, inComponent, withoutPending }: LoaderProps) => {
+const Loader = ({ className, inComponent, withoutPending, size }: LoaderProps) => {
     const { pending } = useFormStatus();
 
     return (
         <>
             {withoutPending ? (
-                <LoaderComponent className={className} inComponent={inComponent} />
+                <LoaderComponent className={className} inComponent={inComponent} size={size} />
             ) : (
-                pending && <LoaderComponent className={className} inComponent={inComponent} />
+                pending && <LoaderComponent className={className} inComponent={inComponent} size={size} />
             )}
         </>
     );
@@ -27,7 +27,7 @@ const Loader = ({ className, inComponent, withoutPending }: LoaderProps) => {
 
 export default Loader;
 
-const LoaderComponent = ({ className, inComponent }: LoaderProps) => {
+const LoaderComponent = ({ className, inComponent, size }: LoaderProps) => {
     return (
         <div
             className={cn(
@@ -35,7 +35,7 @@ const LoaderComponent = ({ className, inComponent }: LoaderProps) => {
                 className,
             )}
         >
-            <LoaderCircle className="animate-spin w-24 h-24" size={24} />
+            <LoaderCircle className="animate-spin" size={size ?? 96} />
         </div>
     );
 };

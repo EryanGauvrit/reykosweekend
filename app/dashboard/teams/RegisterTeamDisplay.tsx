@@ -14,10 +14,10 @@ const RegisterTeamDisplay = async ({ eventId }: { eventId: string }) => {
     return (
         <div className="mt-5 w-full">
             <h2 className="text-2xl font-bold my-5">Liste des demandes de création d'équipes</h2>
-            <div className="flex flex-wrap gap-5">
+            <div className="grid grid-cols-2 gap-5">
                 {teams.length > 0 ? (
                     teams.map((team) => (
-                        <Card key={team.id} className="p-5">
+                        <Card key={team.id} className="p-2">
                             <CardHeader>
                                 <CardTitle>{team.name}</CardTitle>
                                 <p>{team.players.length}/5 Membres</p>

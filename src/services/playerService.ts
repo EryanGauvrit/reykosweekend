@@ -206,8 +206,20 @@ export type TeamWithAllInclude = Prisma.Betterteams_teamGetPayload<{
     select: {
         teamID: true;
         name: true;
-        players: true;
+        players: {
+            select: {
+                id: true;
+                nickname: true;
+                minecraftNickname: true;
+                isOwner: true;
+            };
+        };
         score: true;
+        _count: {
+            select: {
+                quests: true;
+            };
+        };
     };
 }>;
 
@@ -229,12 +241,21 @@ export const getTeamListAll = wrapResponse(async (eventId: string) => {
         select: {
             teamID: true,
             name: true,
-            players: true,
+            players: {
+                select: {
+                    id: true,
+                    nickname: true,
+                    minecraftNickname: true,
+                    isOwner: true,
+                },
+            },
             score: true,
+            _count: {
+                select: {
+                    quests: true,
+                },
+            },
         },
-        // include: {
-        //     players: true,
-        // },
     });
 });
 
