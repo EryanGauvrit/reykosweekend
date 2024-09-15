@@ -22,7 +22,6 @@ const FormSetEvent = ({ event }: { event?: Event }) => {
                 }}
                 className="max-w-2xl max-h-[900px] overflow-auto"
                 size="icon"
-                classNameTrigger="w-8 h-8"
                 variant="warning"
             >
                 <FormContent event={event} />

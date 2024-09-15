@@ -12,10 +12,12 @@ export const challengeSchema = z.object({
     rewardFirst: z.string(),
     rewardSecond: z.string(),
     rewardThird: z.string(),
+    scoreParticipation: z.number(),
+    rewardParticipation: z.string(),
 });
 
 export const challengeRankingSchema = z.object({
     teamId: z.string(),
     rankPosition: z.number(),
-    eventInGameId: z.string(),
+    challengeId: z.string(),
 });

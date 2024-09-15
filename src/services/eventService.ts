@@ -19,9 +19,9 @@ export type EventWithAllInclude = Prisma.EventGetPayload<{
     };
 }>;
 
-export type EventWithEventsInGame = Prisma.EventGetPayload<{
+export type EventWithChallenges = Prisma.ChallengeGetPayload<{
     include: {
-        EventInGame: true;
+        ranking: true;
         Quests: true;
     };
 }>;

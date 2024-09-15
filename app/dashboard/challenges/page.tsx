@@ -3,6 +3,10 @@ import { getNextEvent } from '@/services/eventService';
 import { auth } from 'auth';
 import { Swords } from 'lucide-react';
 import { redirect } from 'next/navigation';
+import FormSetQuest from '../quests/FormSetQuest';
+import QuestsDisplay from '@/components/context/QuestsDisplay';
+import FormSetChallenge from './FormSetChallenge';
+import ChallengeAdminDisplay from './ChallengeAdminDisplay';
 
 const page = async () => {
     const session = await auth();
@@ -29,7 +33,10 @@ const page = async () => {
             {isErrored ? (
                 <div className="text-destructive">Erreur lors de la récupération de l'évènement</div>
             ) : (
-                <section className="mt-10 flex flex-col gap-5"></section>
+                <div className="p-4 col-span-2 max-w-5xl w-full m-auto mt-10">
+                    <FormSetChallenge eventId={data.id} />
+                    <ChallengeAdminDisplay eventId={data.id} />
+                </div>
             )}
         </main>
     );

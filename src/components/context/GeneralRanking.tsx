@@ -5,7 +5,7 @@ import Ranking from '@/icons/Ranking';
 import Squad from '@/icons/Squad';
 import { getTeamListAll, TeamWithAllInclude } from '@/services/playerService';
 import clsx from 'clsx';
-import { Eye, ShieldQuestion, Swords, Users } from 'lucide-react';
+import { Crown, Eye, ShieldQuestion, Swords, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Loader from '../basics/Loader';
 import { Button } from '../ui/button';
@@ -128,9 +128,14 @@ const GeneralRanking = ({ eventId }: { eventId: string }) => {
                                                 </DialogHeader>
                                                 <ul className="flex flex-col gap-2">
                                                     {team.players.map((member) => (
-                                                        <li key={member.id} className="text-primary">
-                                                            {member.nickname} [InGame: {member.minecraftNickname}]{' '}
-                                                            {member.isOwner ? '(Chef)' : ''}
+                                                        <li key={member.id} className="text-primary flex items-center gap-2">
+                                                            {member.isOwner && (
+                                                                <span className="text-amber-500">
+                                                                    <Crown size={16} />
+                                                                </span>
+                                                            )}{' '}
+                                                            {member.nickname}
+                                                            <span className="text-warning">[InGame: {member.minecraftNickname}]</span>
                                                         </li>
                                                     ))}
                                                 </ul>

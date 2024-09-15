@@ -29,7 +29,6 @@ const RegisterForm = ({ eventId }: { eventId: string }) => {
             isOwner: data['isOwner' + i] === 'true',
             eventId,
         }));
-        console.log(players);
 
         const team = {
             name: data.name,

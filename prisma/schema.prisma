@@ -120,7 +120,7 @@ model Betterteams_team {
   pvp           Boolean   @default(false)
   eventId       String
 
-  ranking                                     EventGameRanking[]
+  ranking                                     ChallengeRanking[]
   players                                     Player[]
   quests                                      Quest[]
   event                                       Event @relation(fields: [eventId], references: [id], onUpdate: Cascade, onDelete: Cascade)
@@ -232,36 +232,38 @@ model Event {
   dueDate       DateTime
 
   players         Player[]
-  Quests          Quest[]
+  quests          Quest[]
   teamRegisters   TeamRegister[]
   teams           Betterteams_team[]
-  EventInGame     EventInGame[]
+  challenges      Challenge[]
 }
 
-model EventInGame {
-  id                  String     @id @default(uuid())
-  title               String
-  description         String
-  startDate           DateTime
-  dueDate             DateTime
-  scoreRewardFirst    Int
-  scoreRewardSecond   Int
-  scoreRewardThird    Int
-  rewardFirst         String
-  rewardSecond        String
-  rewardThird         String
-  eventId             String
-  ranking             EventGameRanking[]
+model Challenge {
+  id                    String     @id @default(uuid())
+  title                 String
+  description           String     @db.Text
+  startDate             DateTime
+  dueDate               DateTime
+  scoreRewardFirst      Int
+  scoreRewardSecond     Int
+  scoreRewardThird      Int
+  rewardFirst           String
+  rewardSecond          String
+  rewardThird           String
+  scoreParticipation    Int
+  rewardParticipation   String
+  eventId               String
+  ranking               ChallengeRanking[]
 
   event         Event @relation(fields: [eventId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
 
-model EventGameRanking {
+model ChallengeRanking {
   id            String     @id @default(uuid())
   teamId        String
   rankPosition  Int
-  eventInGameId String
+  challengeId String
 
-  eventInGame   EventInGame       @relation(fields: [eventInGameId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  challenges    Challenge       @relation(fields: [challengeId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   team          Betterteams_team  @relation(fields: [teamId], references: [teamID], onUpdate: Restrict, onDelete: Restrict)
 }

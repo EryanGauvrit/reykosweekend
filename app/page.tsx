@@ -1,6 +1,7 @@
 import DialogForm from '@/components/basics/DialogForm';
 import DisplayImage from '@/components/basics/DisplayImage';
 import DisplayValueUpdateTrigger from '@/components/basics/DisplayValueUpdateTrigger';
+import ChallengeProgrammation from '@/components/context/ChallengeProgrammation';
 import GeneralRanking from '@/components/context/GeneralRanking';
 import NextEventCountDown from '@/components/context/NextEventCountDown';
 import NoEventPlannified from '@/components/context/NoEventPlannified';
@@ -127,6 +128,7 @@ export default async function Home() {
                 {isFuture(event.startDate) && <NextEventCountDown startDate={event.startDate} />}
                 {isPast(event.startDate) && <GeneralRanking eventId={event.id} />}
             </section>
+            {isPast(event.startDate) && <ChallengeProgrammation eventId={event.id} />}
         </main>
     );
 }
