@@ -80,12 +80,18 @@ export const updateTeamPlayers = wrapResponse(async (formData: FormData) => {
 
     const { teamId, teamRegisterId } = Object.fromEntries(formData) as Record<string, string>;
 
-    return await prisma.player.updateMany({
+    await prisma.player.updateMany({
         where: {
             teamRegisterId,
         },
         data: {
             teamId,
+        },
+    });
+
+    return await prisma.teamRegister.delete({
+        where: {
+            id: teamRegisterId,
         },
     });
 });
@@ -108,15 +114,19 @@ export type TeamRegisterWithAllInclude = Prisma.TeamRegisterGetPayload<{
     };
 }>;
 
-export const teamRegisterListAll = wrapResponse(async () => {
+export const getTeamRegisterListAll = wrapResponse(async () => {
     return await prisma.teamRegister.findMany({
         include: {
-            players: true,
+            players: {
+                orderBy: {
+                    isOwner: 'desc',
+                },
+            },
         },
     });
 });
 
-export const teamRegisterList = wrapResponse(async () => {
+export const getTeamRegisterList = wrapResponse(async () => {
     return await prisma.teamRegister.findMany({
         select: {
             id: true,
@@ -242,6 +252,9 @@ export const getTeamListAll = wrapResponse(async (eventId: string) => {
             teamID: true,
             name: true,
             players: {
+                orderBy: {
+                    isOwner: 'desc',
+                },
                 select: {
                     id: true,
                     nickname: true,

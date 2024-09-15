@@ -3,15 +3,15 @@
 import DialogForm from '@/components/basics/DialogForm';
 import SelectForm from '@/components/basics/SelectForm';
 import { Label } from '@/components/ui/label';
+import GroupAdd from '@/icons/GroupAdd';
 import { Team } from '@/services/playerService';
 import { QuestWhithAllInclude, validateQuest } from '@/services/questService';
-import { Users2 } from 'lucide-react';
 
 const FormAddTeamQuest = ({ quest, teams }: { quest: QuestWhithAllInclude; teams: Team[] }) => {
     return (
         <DialogForm
             title="Validation de quête"
-            textOpen={<Users2 size={20} />}
+            textOpen={<GroupAdd size={20} />}
             textSubmit="Sauvegarder"
             description="Veuillez selectionner l'équipe' ayant validé cette quête."
             actionFn={async (formData) => {

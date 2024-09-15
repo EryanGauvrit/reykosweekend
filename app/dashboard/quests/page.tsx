@@ -35,9 +35,9 @@ const page = async () => {
             </h1>
 
             {isErrored ? (
-                <div className="text-destructive">Erreur lors de la récupération de l'évènement</div>
+                <div className="text-destructive mt-10">Erreur lors de la récupération de l'évènement</div>
             ) : (
-                <div className="p-4 col-span-2 max-w-5xl w-full m-auto">
+                <div className="p-4 col-span-2 max-w-5xl w-full m-auto mt-10">
                     <FormSetQuest eventId={data.id} />
                     <QuestsDisplay eventId={data.id} />
                 </div>

@@ -22,7 +22,6 @@ const GeneralRanking = ({ eventId }: { eventId: string }) => {
     useEffect(() => {
         const fetchTeams = async () => {
             const response = await getTeamListAll(eventId);
-            console.log('EXECUTE');
             if (response.isErrored) {
                 toast({
                     title: 'Erreur',

@@ -1,7 +1,8 @@
 import DeleteAction from '@/components/basics/DeleteAction';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { deleteTeam, getTeamListAll, TeamWithAllInclude } from '@/services/playerService';
+import { deletePlayer, deleteTeam, getTeamListAll, TeamWithAllInclude } from '@/services/playerService';
+import FormSetPlayer from './FormSetPlayer';
 
 const TeamDisplay = async ({ eventId }: { eventId: string }) => {
     const res = await getTeamListAll(eventId);
@@ -27,6 +28,7 @@ const TeamDisplay = async ({ eventId }: { eventId: string }) => {
                                             <TableHead>Minecraft</TableHead>
                                             <TableHead>Email</TableHead>
                                             <TableHead>Grade</TableHead>
+                                            <TableHead>Actions</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
@@ -36,12 +38,24 @@ const TeamDisplay = async ({ eventId }: { eventId: string }) => {
                                                 <TableCell>{player.minecraftNickname}</TableCell>
                                                 <TableCell>{player.email}</TableCell>
                                                 <TableCell>{player.isOwner ? 'Chef' : 'Membre'}</TableCell>
+                                                <TableCell>
+                                                    <FormSetPlayer playerProps={player} teamId={team.teamID} eventId={eventId} />
+                                                    <DeleteAction
+                                                        id={player.id}
+                                                        title="Supprimer ce joueur"
+                                                        description="Voulez-vous vraiment supprimer ce joueur ?"
+                                                        messageValidation="Joueur supprimé"
+                                                        fnAction={deletePlayer}
+                                                        className="ml-2"
+                                                    />
+                                                </TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
                                 </Table>
                             </CardContent>
-                            <CardFooter className="flex justify-end gap-4">
+                            <CardFooter className="flex gap-4">
+                                <FormSetPlayer teamId={team.teamID} eventId={eventId} />
                                 <DeleteAction
                                     id={team.teamID}
                                     title="Supprimer cette équipe"

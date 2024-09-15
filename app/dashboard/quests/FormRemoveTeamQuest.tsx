@@ -3,15 +3,14 @@
 import DialogForm from '@/components/basics/DialogForm';
 import SelectForm from '@/components/basics/SelectForm';
 import { Label } from '@/components/ui/label';
-import { Team } from '@/services/playerService';
-import { QuestWhithAllInclude, unvalidateQuest, validateQuest } from '@/services/questService';
-import { Users2 } from 'lucide-react';
+import GroupRemove from '@/icons/GroupRemove';
+import { QuestWhithAllInclude, unvalidateQuest } from '@/services/questService';
 
 const FormRemoveTeamQuest = ({ quest }: { quest: QuestWhithAllInclude }) => {
     return (
         <DialogForm
             title="Annulation de validation de quête"
-            textOpen={<Users2 size={20} />}
+            textOpen={<GroupRemove size={20} />}
             textSubmit="Sauvegarder"
             description="Veuillez selectionner l'équipe qui n'a pas réussi cette quête."
             actionFn={async (formData) => {
@@ -23,7 +22,7 @@ const FormRemoveTeamQuest = ({ quest }: { quest: QuestWhithAllInclude }) => {
             variant="destructive"
         >
             <div className="grid gap-2">
-                <Label htmlFor="teamId">Supprimé une équipe</Label>
+                <Label htmlFor="teamId">Supprimer une équipe</Label>
                 <SelectForm
                     id="teamId"
                     name="teamId"

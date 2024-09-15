@@ -3,9 +3,9 @@
 import AlertDialogComp from '@/components/basics/AlertDialog';
 import Loader from '@/components/basics/Loader';
 import { useToast } from '@/components/ui/use-toast';
+import GroupAdd from '@/icons/GroupAdd';
 import { createTeam, updateTeamPlayers } from '@/services/playerService';
 import { TeamRegister } from '@prisma/client';
-import { UsersRound } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -46,14 +46,14 @@ const ValidationRegisterTeam = ({ teamProps }: { teamProps: TeamRegister }) => {
     return (
         <>
             <AlertDialogComp
-                title="Modifier cette équipe"
-                openLabel={<UsersRound size={20} />}
+                title="Inscrire cette équipe"
+                openLabel={<GroupAdd size={20} />}
                 confirmLabel="Inscrire l'équipe"
                 description="Voulez-vous vraiment inscrire cette équipe ?"
                 className="max-w-2xl"
                 closeLabel="Annuler"
                 confirmAction={async () => {
-                    handleCreateTeam();
+                    await handleCreateTeam();
                 }}
                 variant="success"
                 size="icon"

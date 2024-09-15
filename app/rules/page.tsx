@@ -18,7 +18,7 @@ const page = async () => {
                 <CardContent className="flex flex-col gap-6">
                     <p>⚔️ Plongez dans une aventure Hardcore en survie à vivre en équipe durant un week-end intense !</p>
                     <ol className="list-decimal flex flex-col gap-4 max-w-3xl w-full m-auto">
-                        <li>Équipes de 3 à 5 joueurs : Formez votre groupe et préparez-vous pour 48 heures de survie acharnée.</li>
+                        <li>Équipes de 3 à 5 participant·e·s : Formez votre groupe et préparez-vous pour 48 heures de survie acharnée.</li>
                         <li>Horaires : Le serveur s'ouvre vendredi à 20h et se ferme dimanche à 20h. Tenez bon jusqu'à la fin !</li>
                         <li>
                             Objectifs variés : Gagnez des points en accomplissant des objectifs tout au long du week-end. Certains seront
@@ -31,12 +31,12 @@ const page = async () => {
                         </li>
                         <li>
                             PvP activé partout : À l'exception du spawn, le PvP est omniprésent. Gagnez des points en éliminant d'autres
-                            joueurs, mais attention, la mort vous fera perdre des points.
+                            participant·e·s, mais attention, la mort vous fera perdre des points.
                         </li>
                         <li>Commerce au spawn : Échangez des équipements et des ressources avec les autres équipes au spawn.</li>
                         <li>
                             Pactes et vols : Les alliances entre équipes sont interdites, mais les pactes de non-agression sont autorisés.
-                            Soyez vigilant, car vos camps peuvent être pillés par les autres équipes.
+                            Soyez vigilant·e·s, car vos camps peuvent être pillés par les autres équipes.
                         </li>
                         <li>
                             Chat de proximité obligatoire : La communication est clé. Le chat vocal de proximité est obligatoire pour
@@ -52,7 +52,7 @@ const page = async () => {
                             du serveur.
                         </li>
                     </ol>
-                    <p>Préparez vous pour un week-end où stratégie, survie, et compétition seront vos meilleures alliées ! 🗡️🛡️</p>
+                    <p>Préparez-vous pour un week-end où stratégie, survie, et compétition seront vos meilleur·e·s allié·e·s ! 🗡️🛡️</p>
                 </CardContent>
             </Card>
         </main>

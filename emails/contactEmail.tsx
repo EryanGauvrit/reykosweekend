@@ -18,7 +18,9 @@ const ContactEmail = ({ email, firstName, lastName, message, subject }: Props) =
                 <h2 className="text-lg font-bold my-4">Son email : </h2>
                 <p className="my-4 font-bold">{email}</p>
                 <h2 className="text-lg font-bold my-4">Son message : </h2>
-                <p className="my-4 text-left max-w-[600px] m-auto p-3 border border-solid border-black rounded-xl">{message}</p>
+                <p className="my-4 text-left max-w-[600px] m-auto p-3 border border-solid border-black rounded-xl whitespace-pre-wrap">
+                    {message}
+                </p>
             </div>
         </Tailwind>
     );

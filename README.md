@@ -11,34 +11,7 @@
 
 ## Run app
 
-### Set environement variable
-
-To generate random secret
-
-```bash
-    openssl rand -base64 33
-```
-
-Look in the env file to set the variables that the application needs
-
-### Git initialization
-
--   Clone this respository
--   Remove connexion
-
-```bash
-    rm -rf .git
-```
-
--   New Git initialization
-
-```bash
-    git init
-    git add .
-    git commit -m "SETUP - Nextjs fast configuration"
-```
-
-### Database
+### Don't forget environment variable
 
 ### Commands
 

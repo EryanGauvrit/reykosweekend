@@ -31,7 +31,11 @@ const FormSetPlayer = ({
                         ...data,
                         teamId: teamId || undefined,
                         isOwner: data.isOwner === 'true',
+                        nickname: data['nickname0'] as string,
+                        minecraftNickname: data['minecraftNickname0'] as string,
+                        email: data['email0'] as string,
                     };
+                    console.log(player);
                     const formDataQuery = new FormData();
                     formDataQuery.append('player', JSON.stringify(player));
                     formDataQuery.append('id', playerProps.id);
@@ -60,9 +64,12 @@ const FormSetPlayer = ({
             actionFn={async (formData) => {
                 const data = Object.fromEntries(formData.entries());
                 const player = {
+                    ...data,
                     teamId: teamId || undefined,
                     isOwner: data.isOwner === 'true',
-                    ...data,
+                    nickname: data['nickname0'] as string,
+                    minecraftNickname: data['minecraftNickname0'] as string,
+                    email: data['email0'] as string,
                 };
                 const formDataQuery = new FormData();
                 formDataQuery.append('player', JSON.stringify(player));

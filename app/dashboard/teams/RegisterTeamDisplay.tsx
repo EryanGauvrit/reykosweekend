@@ -1,13 +1,13 @@
 import DeleteAction from '@/components/basics/DeleteAction';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { deletePlayer, deleteTeamRegister, teamRegisterListAll, TeamRegisterWithAllInclude } from '@/services/playerService';
+import { deletePlayer, deleteTeamRegister, getTeamRegisterListAll, TeamRegisterWithAllInclude } from '@/services/playerService';
 import FormSetPlayer from './FormSetPlayer';
 import FormSetRegisterTeam from './FormSetRegisterTeam';
 import ValidationRegisterTeam from './ValidationRegisterTeam';
 
 const RegisterTeamDisplay = async ({ eventId }: { eventId: string }) => {
-    const res = await teamRegisterListAll();
+    const res = await getTeamRegisterListAll();
 
     const teams: TeamRegisterWithAllInclude[] = !res.isErrored && res.data;
 

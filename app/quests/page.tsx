@@ -27,7 +27,7 @@ const page = async () => {
                         Voici les quêtes en jeu pour l'évènement <strong>{event.title}</strong>.
                         <br />
                         Chaque équipe doit avoir sa propre stratégie pour les réaliser. Certaines se réalisent ne avançant dans le jeu de
-                        manière "standart", d'autres nécessitent réflexion, stratégie et optmisation.
+                        manière "standard", d'autres nécessitent réflexion, stratégie et optmisation.
                     </p>
                     <p>⚠️ Pour les faire valider, contactes un modérateur en jeu ! ⚠️</p>
                     <Card className="px-10 py-5 max-w-5xl">
