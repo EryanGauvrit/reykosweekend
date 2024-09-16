@@ -10,6 +10,7 @@ import type { Metadata } from 'next';
 import { notoSans } from '../style/fonts/font';
 import './globals.css';
 import Provider from './provider';
+import { Analytics } from '@vercel/analytics/react';
 
 const TITLE = "The Reyko's Weekend : Events Minecraft Intensifs !";
 const DESCRIPTION =
@@ -47,6 +48,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                             <Header>
                                 <HeaderAuth />
                             </Header>
+                            <Analytics />
                             {children}
                             <Footer />
                         </div>
