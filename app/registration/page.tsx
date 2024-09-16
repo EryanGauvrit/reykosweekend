@@ -4,8 +4,9 @@ import { Card, CardDescription, CardHeader } from '@/components/ui/card';
 import { formatStartEndDate } from '@/lib/utils';
 import { getNextEvent } from '@/services/eventService';
 import { Event } from '@prisma/client';
-import RegisterForm from './RegisterForm';
 import { add, isFuture } from 'date-fns';
+import Link from 'next/link';
+import RegisterForm from './RegisterForm';
 
 const page = async () => {
     const { data, isErrored }: { data: Event; isErrored: boolean } = await getNextEvent();
@@ -27,7 +28,14 @@ const page = async () => {
                             <h2 className="text-lg font-semibold">
                                 {formatStartEndDate(new Date(data.startDate), new Date(data.dueDate))}
                             </h2>
-                            <CardDescription>Remplisser le formulaire ci-dessous pour faire une demande d'inscription.</CardDescription>
+                            <CardDescription>
+                                Discutes avec tes potes pour savoir qui veut participer à cet événement. <br />
+                                Ensuite inscrit ton équipe directement ici 👇. <br />
+                                ⚠️ Attention, en cas de désistement, merci de{' '}
+                                <Link href="/contact" className="underline">
+                                    nous prévenir au plus vite.
+                                </Link>
+                            </CardDescription>
                         </CardHeader>
                         <RegisterForm eventId={data.id} />
                     </Card>
