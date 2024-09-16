@@ -1,3 +1,5 @@
+import HeaderAuth from '@/components/auth/HeaderAuth';
+import BgDesign from '@/components/layout/BgDesign';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { Toaster } from '@/components/ui/toaster';
@@ -8,11 +10,10 @@ import type { Metadata } from 'next';
 import { notoSans } from '../style/fonts/font';
 import './globals.css';
 import Provider from './provider';
-import HeaderAuth from '@/components/auth/HeaderAuth';
-import BgDesign from '@/components/layout/BgDesign';
 
-const TITLE = 'Les Lunaires: Théâtre Féministe et Engagé';
-const DESCRIPTION = 'Les Lunaires: Théâtre Féministe et Engagé';
+const TITLE = "The Reyko's Weekend : Events Minecraft Intensifs !";
+const DESCRIPTION =
+    "Reyko's Weekend organise des événements Minecraft intenses et uniques ! Génralement sur un week-end, ces événements sont l’occasion de se retrouver entre passionnés de Minecraft (ou pas 😜) pour partager des moments inoubliables !";
 
 const getHomeSettings = async () => {
     return await prisma.webSiteSettings.findFirst({
