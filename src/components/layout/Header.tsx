@@ -3,10 +3,12 @@
 import { isPhoneScreen } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import logo from '../../../public/logo.png';
 import ButtonBurger from '../basics/ButtonBurger';
 import NavLink from '../basics/NavLink';
+
+type Ref = MutableRefObject<{ contains: (arg0: any) => any }>;
 
 export const Header = (props: { children: React.ReactNode }) => {
     const routes = [
@@ -18,7 +20,7 @@ export const Header = (props: { children: React.ReactNode }) => {
     ];
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const ref = useRef(null);
+    const ref: Ref = useRef(null as any);
 
     useEffect(() => {
         const phoneSceen = isPhoneScreen();
@@ -40,7 +42,7 @@ export const Header = (props: { children: React.ReactNode }) => {
 
     return (
         <header
-            ref={ref}
+            ref={ref as any}
             className={`text-foreground ${isMenuOpen ? 'bg-primary ' : 'bg-transparent'} md:bg-transparent flex flex-col md:flex-row justify-around items-center md:py-2 md:px-6 md:w-full gap-2`}
         >
             <div className="flex justify-between md:justify-around items-center w-full md:w-auto px-5 md:px-2 py-5">
