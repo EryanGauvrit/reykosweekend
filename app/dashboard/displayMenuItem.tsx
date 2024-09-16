@@ -1,3 +1,4 @@
+import Twitch from '@/icons/Twitch';
 import { isAdmin } from '@/services/authService';
 import { CalendarCog, PanelTop, Settings, Shield, ShieldQuestion, Swords, TrendingUp, UserCog, Users } from 'lucide-react';
 
@@ -62,6 +63,12 @@ export const displayMenuItem = async () => {
             href: dashboardUrl + '/events',
             icon: <CalendarCog size={20} />,
             description: 'Gérer les évènements',
+        },
+        {
+            label: 'Streamers',
+            href: dashboardUrl + '/streamers',
+            icon: <Twitch size={20} />,
+            description: 'Gérer les streamers',
         },
         {
             label: 'Administrateurs',

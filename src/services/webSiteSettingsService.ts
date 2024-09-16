@@ -41,6 +41,8 @@ export const updateGlobalSettings = wrapResponse(async (formData: FormData) => {
             instagram: (formData.get('instagram') as string) || '',
             linkedin: (formData.get('linkedin') as string) || '',
             youtube: (formData.get('youtube') as string) || '',
+            twitch: (formData.get('twitch') as string) || '',
+            discord: (formData.get('discord') as string) || '',
         },
     });
 });

@@ -6,9 +6,11 @@ import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
+import Discord from '@/icons/Discord';
 import FaceBook from '@/icons/FaceBook';
 import Instagram from '@/icons/Instagram';
 import Linkedin from '@/icons/Linkedin';
+import Twitch from '@/icons/Twitch';
 import Youtube from '@/icons/Youtube';
 import { updateGlobalSettings } from '@/services/webSiteSettingsService';
 import { useRouter } from 'next/navigation';
@@ -21,6 +23,8 @@ type Props = {
         youtube: string | null;
         facebook: string | null;
         linkedin: string | null;
+        twitch: string | null;
+        discord: string | null;
     } | null;
 };
 const FormWebSite = ({ webSiteSettings }: Props) => {
@@ -110,6 +114,34 @@ const FormWebSite = ({ webSiteSettings }: Props) => {
                             name="linkedin"
                             defaultValue={webSiteSettings?.linkedin || ''}
                             placeholder="https://www.linkedin.com/in/username"
+                        />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 place-items-center">
+                        <Label className="w-full flex items-center gap-2" htmlFor="twitch">
+                            <Twitch size={24} />
+                            Lien Twitch
+                        </Label>
+                        <Input
+                            className="w-full placeholder:text-muted"
+                            type="text"
+                            id="twitch"
+                            name="twitch"
+                            defaultValue={webSiteSettings?.twitch || ''}
+                            placeholder="https://www.twitch.tv/username"
+                        />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 place-items-center">
+                        <Label className="w-full flex items-center gap-2" htmlFor="discord">
+                            <Discord size={24} />
+                            Lien Discord
+                        </Label>
+                        <Input
+                            className="w-full placeholder:text-muted"
+                            type="text"
+                            id="discord"
+                            name="discord"
+                            defaultValue={webSiteSettings?.discord || ''}
+                            placeholder="https://discord.gg/username"
                         />
                     </div>
                 </CardContent>

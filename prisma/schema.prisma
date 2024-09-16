@@ -23,6 +23,8 @@ model WebSiteSettings {
   facebook         String?
   instagram        String?
   linkedin         String?
+  twitch           String?
+  discord          String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -266,4 +268,14 @@ model ChallengeRanking {
 
   challenges    Challenge       @relation(fields: [challengeId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   team          Betterteams_team  @relation(fields: [teamId], references: [teamID], onUpdate: Restrict, onDelete: Restrict)
+}
+
+model Streamer {
+  id            String     @id @default(uuid())
+  name          String
+  twitch        String
+  instagram     String?
+  youtube       String?
+  discord       String?
+  website       String?
 }
