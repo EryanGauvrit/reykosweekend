@@ -44,7 +44,7 @@ const NextEventCountDown = ({ startDate, title, className }: { startDate: Date; 
     }, [timeLeft, calculateTimeLeft]);
 
     return (
-        <Card className={clsx('flex flex-col items-center justify-center gap-4 px-10 py-5', className)}>
+        <Card className={clsx('flex flex-col items-center justify-center gap-4 px-10 py-5 max-h-[300px] max-w-[430px] m-auto', className)}>
             <h2 className="text-2xl font-bold text-center uppercase">{title || 'Prochain évènement dans'}</h2>
             <div className="flex gap-4">
                 <div className="flex flex-col items-center gap-2">
