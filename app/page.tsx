@@ -109,6 +109,7 @@ export default async function Home() {
                             <Input name="id" type="hidden" value={homeSettings.id} />
                         </DialogForm>
                     </DisplayValueUpdateTrigger>
+                    <p className="text-sm whitespace-pre-wrap">{event.description}</p>
                     <div className="flex flex-col mt-14 md:flex-row gap-5 items-center">
                         {isFuture(dateLimitInscription) && (
                             <Link href="/registration" className={clsx(buttonVariants({ variant: 'default', size: 'lg' }))}>

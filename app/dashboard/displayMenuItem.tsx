@@ -43,12 +43,6 @@ export const displayMenuItem = async () => {
             description: 'Paramétrer les informations générales site internet',
         },
         {
-            label: "Page d'accueil",
-            href: dashboardUrl + '/set-homepage',
-            icon: <PanelTop size={20} />,
-            description: "Paramétrer la page d'accueil",
-        },
-        {
             label: 'Mon compte',
             href: dashboardUrl + '/account',
             icon: <UserCog size={20} />,
@@ -57,6 +51,12 @@ export const displayMenuItem = async () => {
     ];
 
     const itemsMenuSuperAdmin: Item[] = [
+        {
+            label: "Page d'accueil",
+            href: dashboardUrl + '/set-homepage',
+            icon: <PanelTop size={20} />,
+            description: "Paramétrer la page d'accueil",
+        },
         {
             label: 'Évènements',
             href: dashboardUrl + '/events',
