@@ -71,7 +71,7 @@ export default async function Home() {
                     />
                 </span>
             )}
-            <section className="container flex gap-16 xl:gap-5 flex-wrap justify-center items-center xl:justify-around">
+            <section className="container flex gap-16 xl:gap-5 flex-wrap justify-center xl:justify-around">
                 <article className="flex flex-col gap-10 max-w-xl">
                     <DisplayValueUpdateTrigger>
                         <h1 className={clsx('text-3xl uppercase font-bold')}>
@@ -126,7 +126,7 @@ export default async function Home() {
                         </Link>
                     </div>
                 </article>
-                {isFuture(event.startDate) && <NextEventCountDown startDate={event.startDate} />}
+                {isFuture(event.startDate) && <NextEventCountDown startDate={event.startDate} className="m-0 mx-auto" />}
                 {isPast(event.startDate) && <GeneralRanking eventId={event.id} />}
             </section>
             {isPast(event.startDate) && <ChallengeProgrammation eventId={event.id} />}

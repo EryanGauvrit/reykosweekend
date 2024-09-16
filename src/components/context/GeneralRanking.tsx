@@ -45,7 +45,7 @@ const GeneralRanking = ({ eventId }: { eventId: string }) => {
     }, [eventId, toast]);
 
     return (
-        <Card>
+        <Card className="p-4 max-h-[470px] overflow-auto">
             <CardHeader>
                 <CardTitle className="uppercase flex items-center gap-2">
                     <Podium size={25} />
