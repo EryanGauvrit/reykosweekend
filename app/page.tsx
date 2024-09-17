@@ -126,7 +126,9 @@ export default async function Home() {
                         </Link>
                     </div>
                 </article>
-                {isFuture(event.startDate) && <NextEventCountDown startDate={event.startDate} className="m-0 mx-auto" />}
+                {isFuture(event.startDate) && (
+                    <NextEventCountDown startDate={event.startDate} title={event.title} className="m-0 mx-auto" />
+                )}
                 {isPast(event.startDate) && <GeneralRanking eventId={event.id} />}
             </section>
             {isPast(event.startDate) && <ChallengeProgrammation eventId={event.id} />}
