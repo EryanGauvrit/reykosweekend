@@ -51,7 +51,6 @@ const FormSetEvent = ({ event }: { event?: Event }) => {
 export default FormSetEvent;
 
 const FormContent = ({ event }: { event?: Event }) => {
-    event && console.log(format(event.startDate || '', 'yyyy-MM-dd HH:mm').replace(' ', 'T'));
     return (
         <>
             <div className="grid gap-2">

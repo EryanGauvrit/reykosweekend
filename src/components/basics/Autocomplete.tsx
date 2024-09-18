@@ -68,9 +68,7 @@ const Autocomplete = ({
                 //     // remove 0 if no value selected
                 //     setValue(JSON.stringify(id) || '');
                 // } else {
-                console.log('values', values);
                 setValue([...values, id].join('##')); // add value
-                console.log('VALUE', value);
                 // }
             }
         } else {

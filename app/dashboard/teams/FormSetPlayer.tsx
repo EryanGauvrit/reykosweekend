@@ -35,7 +35,6 @@ const FormSetPlayer = ({
                         minecraftNickname: data['minecraftNickname0'] as string,
                         email: data['email0'] as string,
                     };
-                    console.log(player);
                     const formDataQuery = new FormData();
                     formDataQuery.append('player', JSON.stringify(player));
                     formDataQuery.append('id', playerProps.id);

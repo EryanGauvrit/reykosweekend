@@ -21,7 +21,6 @@ const RegisterForm = ({ eventId }: { eventId: string }) => {
 
     const onSubmit = async (formData: FormData) => {
         const data = Object.fromEntries(formData.entries());
-        console.log(data);
         const players = [...Array(nbrPlayer)].map((_, i) => ({
             nickname: data['nickname' + i] as string,
             minecraftNickname: data['minecraftNickname' + i] as string,
