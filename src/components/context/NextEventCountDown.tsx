@@ -1,6 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
+import { formatDate } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { useCallback, useEffect, useState } from 'react';
 import { Card } from '../ui/card';
 
@@ -44,26 +46,34 @@ const NextEventCountDown = ({ startDate, title, className }: { startDate: Date; 
     }, [timeLeft, calculateTimeLeft]);
 
     return (
-        <Card className={clsx('flex flex-col items-center justify-center gap-4 px-10 py-5 max-h-[300px] max-w-[430px] m-auto', className)}>
+        <Card
+            className={clsx(
+                'flex flex-col items-center justify-center gap-4 p-5 xs:px-10 max-h-[300px] xs:max-w-[430px] m-auto',
+                className,
+            )}
+        >
             <h2 className="text-2xl font-bold text-center uppercase">{title || 'Prochain évènement dans'}</h2>
             <div className="flex gap-4">
                 <div className="flex flex-col items-center gap-2">
-                    <span className="text-6xl font-bold">{formatNumber(timeLeft.days)}</span>
-                    <span className="text-lg font-bold">Jours</span>
+                    <span className="text-2xl xs:text-6xl font-bold">{formatNumber(timeLeft.days)}</span>
+                    <span className="xs:text-lg font-bold">Jours</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <span className="text-6xl font-bold">{formatNumber(timeLeft.hours)}</span>
-                    <span className="text-lg font-bold">Heures</span>
+                    <span className="text-2xl xs:text-6xl font-bold">{formatNumber(timeLeft.hours)}</span>
+                    <span className="xs:text-lg font-bold">Heures</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <span className="text-6xl font-bold">{formatNumber(timeLeft.minutes)}</span>
-                    <span className="text-lg font-bold">Minutes</span>
+                    <span className="text-2xl xs:text-6xl font-bold">{formatNumber(timeLeft.minutes)}</span>
+                    <span className="xs:text-lg font-bold">Minutes</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <span className="text-6xl font-bold">{formatNumber(timeLeft.seconds)}</span>
-                    <span className="text-lg font-bold">Secondes</span>
+                    <span className="text-2xl xs:text-6xl font-bold">{formatNumber(timeLeft.seconds)}</span>
+                    <span className="xs:text-lg font-bold">Secondes</span>
                 </div>
             </div>
+            <h3 className="xs:text-lg font-bold text-center">
+                Le {formatDate(startDate, 'dd LLLL', { locale: fr })} à {startDate.toLocaleTimeString()}
+            </h3>
         </Card>
     );
 };

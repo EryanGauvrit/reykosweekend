@@ -71,7 +71,7 @@ export default async function Home() {
                     />
                 </span>
             )}
-            <section className="container flex gap-16 xl:gap-5 flex-wrap justify-center xl:justify-around">
+            <section className="container flex gap-16 xl:gap-5 flex-wrap-reverse xs:flex-wrap justify-center xl:justify-around">
                 <article className="flex flex-col gap-10 max-w-xl">
                     <DisplayValueUpdateTrigger>
                         <h1 className={clsx('text-3xl uppercase font-bold')}>

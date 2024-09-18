@@ -52,7 +52,7 @@ const RegisterForm = ({ eventId }: { eventId: string }) => {
     };
 
     return (
-        <CardContent>
+        <CardContent className="p-2 xs:p-6">
             <form ref={ref} className="flex flex-col gap-4 max-w-4xl w-full" action={onSubmit}>
                 <div className="grid gap-2">
                     <Label htmlFor="name">Nom de l'équipe*</Label>
@@ -91,7 +91,7 @@ const RegisterForm = ({ eventId }: { eventId: string }) => {
                             <FormPlayer isOwner nbrPlayer={0} />
                         </Card>
                         {[...Array(nbrPlayer - 1)].map((_, i) => (
-                            <Card key={i} className="flex items-center gap-2 p-4">
+                            <Card key={i} className="flex flex-col-reverse items-end sm:flex-row sm:items-center gap-2 p-4">
                                 <FormPlayer nbrPlayer={i + 1} />
                                 <Button
                                     variant={'destructive'}
@@ -138,14 +138,14 @@ export default RegisterForm;
 
 export const FormPlayer = ({ isOwner, nbrPlayer, player }: { isOwner?: boolean; nbrPlayer?: number; player?: Player }) => {
     return (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="flex flex-col items-center m-auto xs:grid xs:grid-cols-2 gap-2">
             {isOwner && (
                 <>
                     <h4 className="col-span-2 text-base font-bold">Chef de l'équipe</h4>
                     <input type="hidden" name={'isOwner' + (nbrPlayer ? nbrPlayer?.toString() : '0')} value="true" />
                 </>
             )}
-            <div className="grid gap-2">
+            <div className="xs:grid gap-2">
                 <Label htmlFor={'nickname' + (nbrPlayer ? nbrPlayer?.toString() : '0')}>Nom / pseudo*</Label>
                 <Input
                     required
@@ -155,7 +155,7 @@ export const FormPlayer = ({ isOwner, nbrPlayer, player }: { isOwner?: boolean; 
                     defaultValue={player?.nickname}
                 />
             </div>
-            <div className="grid gap-2">
+            <div className="xs:grid gap-2">
                 <Label htmlFor={'minecraftNickname' + (nbrPlayer ? nbrPlayer?.toString() : '0')} className="min-w-32">
                     pseudo Minecraft*
                 </Label>
@@ -167,7 +167,7 @@ export const FormPlayer = ({ isOwner, nbrPlayer, player }: { isOwner?: boolean; 
                     defaultValue={player?.minecraftNickname}
                 />
             </div>
-            <div className="grid gap-2 col-span-2">
+            <div className="xs:grid gap-2 col-span-2">
                 <Label htmlFor={'email' + (nbrPlayer ? nbrPlayer?.toString() : '0')}>email{isOwner && '*'}</Label>
                 <Input
                     name={'email' + (nbrPlayer ? nbrPlayer?.toString() : '0')}

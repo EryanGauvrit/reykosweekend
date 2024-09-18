@@ -43,7 +43,7 @@ export const Header = (props: { children: React.ReactNode }) => {
     return (
         <header
             ref={ref as any}
-            className={`text-foreground ${isMenuOpen ? 'bg-primary ' : 'bg-transparent'} md:bg-transparent flex flex-col md:flex-row justify-around items-center md:py-2 md:px-6 md:w-full gap-2`}
+            className={`text-foreground ${isMenuOpen ? 'bg-secondary ' : 'bg-transparent'} md:bg-transparent flex flex-col md:flex-row justify-around items-center md:py-2 md:px-6 md:w-full gap-2`}
         >
             <div className="flex justify-between md:justify-around items-center w-full md:w-auto px-5 md:px-2 py-5">
                 <Link href={'/'}>
@@ -58,13 +58,13 @@ export const Header = (props: { children: React.ReactNode }) => {
             </div>
             {isMenuOpen && (
                 <>
-                    <nav className="flex flex-col md:items-center md:flex-row w-full md:w-auto list-none bg-secondary overflow-hidden md:rounded-full md:h-full md:max-h-14 md:opacity-90">
+                    <nav className="flex flex-col md:items-center md:flex-row w-full md:w-auto list-none bg-success overflow-hidden md:rounded-full md:h-full md:max-h-14 md:opacity-90">
                         {routes.map((route, index) => (
                             <NavLink
                                 key={index}
                                 href={route.href}
-                                className="px-10 text-lg md:text-base py-4 font-bold md:font-normal md:hover:bg-primary md:hover:text-accent-foreground text-foreground duration-300 md:text-center border-t border-t-black/30 md:border-none md:py-10"
-                                activeClassName="bg-success text-success-foreground md:py-10"
+                                className="px-10 text-lg md:text-base py-4 font-bold md:font-normal md:hover:bg-secondary md:hover:text-accent-foreground text-foreground duration-300 md:text-center border-t border-t-black/30 md:border-none md:py-10"
+                                activeClassName="bg-primary text-foreground md:py-10"
                             >
                                 {route.text}
                             </NavLink>
