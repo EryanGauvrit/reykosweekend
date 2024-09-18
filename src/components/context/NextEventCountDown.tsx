@@ -72,7 +72,7 @@ const NextEventCountDown = ({ startDate, title, className }: { startDate: Date; 
                 </div>
             </div>
             <h3 className="xs:text-lg font-bold text-center">
-                Le {formatDate(startDate, 'dd LLLL', { locale: fr })} à {startDate.toLocaleTimeString()}
+                Le {formatDate(startDate, 'dd LLLL', { locale: fr })} à {formatDate(startDate, 'HH')}h{formatDate(startDate, 'mm')}
             </h3>
         </Card>
     );
