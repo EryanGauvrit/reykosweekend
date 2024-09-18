@@ -1,7 +1,7 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { AuthError } from 'next-auth';
 import { ZodError } from 'zod';
 import { Variant } from '../types/props/variant';
-import { AuthError } from 'next-auth';
 
 export type encType = 'application/json' | 'multipart/form-data';
 
@@ -25,7 +25,7 @@ export type QueryResponse = {
 export const wrapResponse = <T extends (...args: any[]) => Promise<any>>(actionFn: T) => {
     return async (...args: Parameters<T>): Promise<QueryResponse> => {
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 300));
             const res = await actionFn(...args);
             return {
                 data: res,

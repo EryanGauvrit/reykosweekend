@@ -5,6 +5,7 @@ import { playerListSchema, playerSchema, teamRegisterSchema, teamSchema } from '
 import { Prisma } from '@prisma/client';
 import { isAuthanticated } from './authService';
 import { wrapResponse } from './queryService';
+import { sendNewRegistrationEmail } from './emailService';
 
 /***** PLAYER *****/
 
@@ -151,7 +152,13 @@ export const createTeamRegister = wrapResponse(async (formData: FormData) => {
     if (!teamRes.success) {
         throw teamRes.error;
     }
+    const emailTeamOwner = playerRes.data.find((player) => player.isOwner)?.email;
 
+    if (!emailTeamOwner) {
+        throw new Error('Team owner email not found');
+    }
+
+    await sendNewRegistrationEmail(emailTeamOwner, teamRes.data.registerContext);
     return await prisma.teamRegister.create({
         include: {
             players: true,

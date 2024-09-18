@@ -1,6 +1,6 @@
 import Twitch from '@/icons/Twitch';
 import { isAdmin } from '@/services/authService';
-import { CalendarCog, PanelTop, Settings, Shield, ShieldQuestion, Swords, TrendingUp, UserCog, Users } from 'lucide-react';
+import { CalendarCog, PanelTop, Send, Settings, Shield, ShieldQuestion, Swords, TrendingUp, UserCog, Users } from 'lucide-react';
 
 export interface Item {
     label: string;
@@ -52,6 +52,12 @@ export const displayMenuItem = async () => {
     ];
 
     const itemsMenuSuperAdmin: Item[] = [
+        {
+            label: 'Communication',
+            href: dashboardUrl + '/communication',
+            icon: <Send size={20} />,
+            description: 'Envoyer des messages aux participants',
+        },
         {
             label: "Page d'accueil",
             href: dashboardUrl + '/set-homepage',
