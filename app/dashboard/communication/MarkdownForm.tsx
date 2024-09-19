@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { textareaStyle } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { sendEmail } from '@/services/emailService';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -31,13 +31,14 @@ const MarkdownForm = ({ emails }: { emails?: string[] | null }) => {
 
     return (
         <div className="grid grid-cols-2 gap-4">
-            {!emails && (
-                <p className="col-span-2 text-warning p-4 border border-destructive">
-                    ⚠️ Il n'y pas de liste d'emails, tu peux seulement envoyer un message à une adresse en remplissant le champ email.
-                </p>
-            )}
+            {!emails ||
+                (emails.length === 0 && (
+                    <p className="col-span-2 text-warning p-4 border border-destructive">
+                        ⚠️ Il n'y pas de liste d'emails, tu peux seulement envoyer un message à une adresse en remplissant le champ email.
+                    </p>
+                ))}
             <form action={handleSubmit} className="flex flex-col gap-4 max-w-2xl w-full">
-                {!emails && <Input name="emails" type="email" placeholder="Email" required />}
+                {!emails || (emails.length === 0 && <Input name="emails" type="email" placeholder="Email" required />)}
                 <Input name="subject" type="text" placeholder="Sujet" required />
                 <TextareaAutosize
                     className={textareaStyle}
