@@ -3,7 +3,7 @@ import { Button, Tailwind } from '@react-email/components';
 const NewRegistration = ({ message, email, url }: { message: string; email: string; url: string }) => {
     return (
         <Tailwind>
-            <div className="w-full h-screen bg-[#020817] py-20">
+            <div className="w-full min-h-screen bg-[#020817] py-20">
                 <div className="p-4 h-auto border border-solid border-[#3b82f6] bg-[#1e293b] text-[#f8fafc] rounded-xl max-w-2xl m-auto">
                     <h1 className="text-2xl font-bold uppercase my-4">Nouvelle demande d'inscription</h1>
                     <h2 className="text-lg font-bold my-4">Email du chef de groupe : </h2>
